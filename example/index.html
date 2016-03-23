@@ -11,18 +11,27 @@
 
 		<script>
 			function go() {
-				var container = document.getElementById('container');
-				new Cowbell.UI.Basic(container, Cowbell.Player.Audio, 'music/zipper_flies.mp3');
-				new Cowbell.UI.Basic(container, Cowbell.Player.PSG, 'music/dancing_queen.psg');
-				new Cowbell.UI.Basic(container, Cowbell.Player.ZXSTC, 'music/gasman_-_worlds_apart.stc');
-				new Cowbell.UI.Basic(container, Cowbell.Player.ZXPT3, 'music/summer_mood.pt3');
-				new Cowbell.UI.Basic(container, Cowbell.Player.VTX, 'music/squareland_story.vtx');
-				new Cowbell.UI.Basic(container, Cowbell.Player.OpenMPT, 'music/ambpower.mod');
-				new Cowbell.UI.Basic(container, Cowbell.Player.OpenMPT, 'music/inside_out.s3m');
+				new Cowbell.UI.Basic(document.getElementById('zipperflies'), Cowbell.Player.Audio, 'music/zipper_flies.mp3');
+				new Cowbell.UI.Basic(document.getElementById('dancingqueen'), Cowbell.Player.PSG, 'music/dancing_queen.psg');
+				new Cowbell.UI.Basic(document.getElementById('worldsapart'), Cowbell.Player.ZXSTC, 'music/gasman_-_worlds_apart.stc');
+				new Cowbell.UI.Basic(document.getElementById('summermood'), Cowbell.Player.ZXPT3, 'music/summer_mood.pt3');
+				new Cowbell.UI.Basic(document.getElementById('squarelandstory'), Cowbell.Player.VTX, 'music/squareland_story.vtx');
+				new Cowbell.UI.Basic(document.getElementById('ambientpower'), Cowbell.Player.OpenMPT, 'music/ambpower.mod');
+				new Cowbell.UI.Basic(document.getElementById('insideout'), Cowbell.Player.OpenMPT, 'music/inside_out.s3m');
 			}
 		</script>
 	</head>
 	<body onload="go()">
-		<div id="container"></div>
+		<h1>Cowbell</h1>
+		<h2>a universal web audio player for demoscene music</h2>
+		<ul>
+			<li id="zipperflies">Zipper Flies - ihatemornings (MP3)</li>
+			<li id="dancingqueen">Dancing Queen - Gasman (PSG)</li>
+			<li id="worldsapart">Worlds Apart - Gasman (STC)</li>
+			<li id="summermood">Summer Mood - Megus (PT3)</li>
+			<li id="squarelandstory">Squareland Story - Asi (VTX)</li>
+			<li id="ambientpower">Ambient Power - Vogue (MOD)</li>
+			<li id="insideout">Inside Out - Purple Motion (S3M)</li>
+		</ul>
 	</body>
 </html>
