@@ -3,6 +3,8 @@ DIST_FILES=\
 	dist/cowbell/ay_chip.min.js \
 	dist/cowbell/vtx.min.js \
 	dist/cowbell/zx.min.js \
+	dist/cowbell/libopenmpt.js \
+	dist/cowbell/openmpt_player.js
 
 .PHONY: all
 all: $(DIST_FILES)
@@ -33,6 +35,14 @@ dist/cowbell/zx.min.js: build/z80.js build/stc_player_bin.js cowbell/zx_spectrum
 		--js=build/stc_player_bin.js --js=cowbell/zx_spectrum/stc_player.js \
 		--js=build/pt3_player_bin.js --js=cowbell/zx_spectrum/pt3_player.js \
 		--js_output_file=dist/cowbell/zx.min.js
+
+dist/cowbell/libopenmpt.js: cowbell/openmpt/libopenmpt.js
+	mkdir -p dist/cowbell/
+	cp cowbell/openmpt/libopenmpt.js dist/cowbell/libopenmpt.js
+
+dist/cowbell/openmpt_player.js: cowbell/openmpt/openmpt_player.js
+	mkdir -p dist/cowbell/
+	cp cowbell/openmpt/openmpt_player.js dist/cowbell/openmpt_player.js
 
 build/z80.js: cowbell/zx_spectrum/z80.coffee
 	mkdir -p build
