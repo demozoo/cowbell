@@ -95,7 +95,7 @@
 	}
 
 
-	Cowbell.Player.VTX = function(url) {
-		return new Cowbell.Common.WebAudioPlayer(url, VTXGenerator);
+	Cowbell.Player.VTX = function() {
+		return new Cowbell.Common.WebAudioPlayer(VTXGenerator);
 	};
 })();

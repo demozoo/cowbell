@@ -22,7 +22,7 @@ Cowbell.UI.Basic = function(container, backend, url) {
 	}
 
 	function initAudioElement() {
-		audioElement = new backend(url);
+		audioElement = backend.open(url);
 		if (audioElement.readyState >= audioElement.HAVE_METADATA) {
 			initWithMetadata();
 		} else {

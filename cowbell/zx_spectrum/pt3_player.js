@@ -69,7 +69,7 @@ running the original Z80 player routine under emulation */
 	}
 
 
-	Cowbell.Player.ZXPT3 = function(url) {
-		return new Cowbell.Common.WebAudioPlayer(url, PT3Generator);
+	Cowbell.Player.ZXPT3 = function() {
+		return new Cowbell.Common.WebAudioPlayer(PT3Generator);
 	};
 })();

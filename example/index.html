@@ -11,13 +11,24 @@
 
 		<script>
 			function go() {
-				new Cowbell.UI.Basic(document.getElementById('zipperflies'), Cowbell.Player.Audio, 'music/zipper_flies.mp3');
-				new Cowbell.UI.Basic(document.getElementById('dancingqueen'), Cowbell.Player.PSG, 'music/dancing_queen.psg');
-				new Cowbell.UI.Basic(document.getElementById('worldsapart'), Cowbell.Player.ZXSTC, 'music/gasman_-_worlds_apart.stc');
-				new Cowbell.UI.Basic(document.getElementById('summermood'), Cowbell.Player.ZXPT3, 'music/summer_mood.pt3');
-				new Cowbell.UI.Basic(document.getElementById('squarelandstory'), Cowbell.Player.VTX, 'music/squareland_story.vtx');
-				new Cowbell.UI.Basic(document.getElementById('ambientpower'), Cowbell.Player.OpenMPT, 'music/ambpower.mod');
-				new Cowbell.UI.Basic(document.getElementById('insideout'), Cowbell.Player.OpenMPT, 'music/inside_out.s3m');
+				var audioPlayer = new Cowbell.Player.Audio();
+				new Cowbell.UI.Basic(document.getElementById('zipperflies'), audioPlayer, 'music/zipper_flies.mp3');
+
+				var psgPlayer = new Cowbell.Player.PSG();
+				new Cowbell.UI.Basic(document.getElementById('dancingqueen'), psgPlayer, 'music/dancing_queen.psg');
+
+				var stcPlayer = new Cowbell.Player.ZXSTC();
+				new Cowbell.UI.Basic(document.getElementById('worldsapart'), stcPlayer, 'music/gasman_-_worlds_apart.stc');
+
+				var pt3Player = new Cowbell.Player.ZXPT3();
+				new Cowbell.UI.Basic(document.getElementById('summermood'), pt3Player, 'music/summer_mood.pt3');
+
+				var vtxPlayer = new Cowbell.Player.VTX();
+				new Cowbell.UI.Basic(document.getElementById('squarelandstory'), vtxPlayer, 'music/squareland_story.vtx');
+
+				var modPlayer = new Cowbell.Player.OpenMPT();
+				new Cowbell.UI.Basic(document.getElementById('ambientpower'), modPlayer, 'music/ambpower.mod');
+				new Cowbell.UI.Basic(document.getElementById('insideout'), modPlayer, 'music/inside_out.s3m');
 			}
 		</script>
 	</head>

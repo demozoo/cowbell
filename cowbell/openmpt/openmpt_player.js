@@ -81,7 +81,7 @@
 			Module._openmpt_module_set_position_seconds(modulePtr, position);
 		};
 	}
-	Cowbell.Player.OpenMPT = function(url) {
-		return new Cowbell.Common.WebAudioPlayer(url, OpenMPTGenerator);
+	Cowbell.Player.OpenMPT = function() {
+		return new Cowbell.Common.WebAudioPlayer(OpenMPTGenerator);
 	};
 })();

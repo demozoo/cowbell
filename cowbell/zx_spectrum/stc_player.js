@@ -76,7 +76,7 @@ running the original Z80 player routine under emulation */
 	}
 
 
-	Cowbell.Player.ZXSTC = function(url) {
-		return new Cowbell.Common.WebAudioPlayer(url, STCGenerator);
+	Cowbell.Player.ZXSTC = function() {
+		return new Cowbell.Common.WebAudioPlayer(STCGenerator);
 	};
 })();

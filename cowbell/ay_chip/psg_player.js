@@ -50,7 +50,7 @@
 		});
 	}
 
-	Cowbell.Player.PSG = function(url) {
-		return new Cowbell.Common.WebAudioPlayer(url, PSGGenerator);
+	Cowbell.Player.PSG = function() {
+		return new Cowbell.Common.WebAudioPlayer(PSGGenerator);
 	};
 })();
