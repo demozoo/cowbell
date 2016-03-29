@@ -49,14 +49,24 @@
 					]
 				]
 
-				var ul = document.getElementById('tracks');
+				container = document.getElementById('player');
+				player = new Cowbell.UI.Basic(container);
+
+				var selector = document.getElementById('track-select');
 				for (var i = 0; i < tracks.length; i++) {
 					var title = tracks[i][0];
 					var track = tracks[i][1];
-					var li = document.createElement('li');
-					li.appendChild(document.createTextNode(title));
-					ul.appendChild(li);
-					new Cowbell.UI.Basic(li, track);
+					var option = document.createElement('option');
+					selector.appendChild(option);
+					option.value = i;
+					option.appendChild(document.createTextNode(title));
+				}
+				selector.onchange = function() {
+					var index = parseInt(selector.value, 10);
+					if (!isNaN(index)) {
+						var track = tracks[index][1];
+						player.open(track);
+					}
 				}
 			}
 		</script>
@@ -64,7 +74,10 @@
 	<body onload="go()">
 		<h1>Cowbell</h1>
 		<h2>a universal web audio player for demoscene music</h2>
-		<ul id="tracks">
-		</ul>
+		<select id="track-select">
+			<option value="">Select a track...</option>
+		</select>
+
+		<div id="player"></div>
 	</body>
 </html>

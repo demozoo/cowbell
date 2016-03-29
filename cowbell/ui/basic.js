@@ -1,10 +1,12 @@
 /* Basic UI for the Cowbell audio player */
 
-Cowbell.UI.Basic = function(container, track) {
+Cowbell.UI.Basic = function(container) {
 	var audioElement = null;
+	var currentTrack = null;
 
 	var playButton = document.createElement('button');
 	playButton.innerHTML = 'play';
+	playButton.disabled = true;
 	container.appendChild(playButton);
 	var scrubber = document.createElement('input');
 	scrubber.type = 'range';
@@ -22,7 +24,7 @@ Cowbell.UI.Basic = function(container, track) {
 	}
 
 	function initAudioElement() {
-		audioElement = track.open();
+		audioElement = currentTrack.open();
 		if (audioElement.readyState >= audioElement.HAVE_METADATA) {
 			initWithMetadata();
 		} else {
@@ -37,7 +39,9 @@ Cowbell.UI.Basic = function(container, track) {
 			playButton.innerHTML = 'play';
 		};
 		audioElement.ontimeupdate = function() {
-			scrubber.value = audioElement.currentTime * 100;
+			if (audioElement) {
+				scrubber.value = audioElement.currentTime * 100;
+			}
 		};
 		audioElement.onended = function() {
 			scrubber.value = 0;
@@ -55,5 +59,19 @@ Cowbell.UI.Basic = function(container, track) {
 		} else {
 			audioElement.pause();
 		}
+	};
+
+	this.open = function(track) {
+		if (audioElement && !audioElement.paused) {
+			audioElement.pause();
+		}
+		if (currentTrack && currentTrack.close) {
+			currentTrack.close();
+		}
+		currentTrack = track;
+		audioElement = null;
+		scrubber.value = 0;
+		scrubber.disabled = true;
+		playButton.disabled = false;
 	};
 };

@@ -19,7 +19,6 @@
 		}
 
 		this.cleanup = function() {
-			/* TODO: find a suitable place to actually call this :-) */
 			if (modulePtr) {
 				Module._openmpt_module_destroy(modulePtr);
 			}
