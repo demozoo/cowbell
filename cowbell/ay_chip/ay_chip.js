@@ -9,6 +9,15 @@
 			0.190123, 0.229088, 0.282717, 0.333324
 		];
 
+		var STEREO_MODES = {
+			'ABC': [0.25, 0.5, 0.75],
+			'ACB': [0.25, 0.75, 0.5],
+			'BAC': [0.5, 0.25, 0.75],
+			'BCA': [0.75, 0.25, 0.5],
+			'CAB': [0.5, 0.75, 0.25],
+			'CBA': [0.75, 0.5, 0.25]
+		};
+
 		var frequency = opts.frequency;
 		var sampleRate = opts.sampleRate;
 
@@ -49,7 +58,14 @@
 		var envelopeContinueMask = 0x00;
 		var envelopeValue = 0x00;
 
-		var panning = opts.panning || [0.5, 0.5, 0.5];
+		var panning;
+		if (opts.panning) {
+			panning = opts.panning;
+		} else if (opts.stereoMode) {
+			panning = STEREO_MODES[opts.stereoMode.toUpperCase()] || [0.5, 0.5, 0.5];
+		} else {
+			panning = [0.5, 0.5, 0.5];
+		}
 		var panVolumeAdjust = [];
 		for (var i = 0; i < 3; i++) {
 			/* kebby says we should do this. And you don't argue with kebby.
@@ -277,6 +293,7 @@
 					ayChip = new Cowbell.Common.AYChip({
 						'frequency': decodedData['ayFrequency'] || AY_FREQUENCY,
 						'panning': decodedData['panning'],
+						'stereoMode': decodedData['stereoMode'],
 						'sampleRate': audioCtx.sampleRate
 					});
 

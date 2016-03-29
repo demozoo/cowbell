@@ -12,8 +12,8 @@
 			function go() {
 				var audioPlayer = new Cowbell.Player.Audio();
 				var psgPlayer = new Cowbell.Player.PSG();
-				var stcPlayer = new Cowbell.Player.ZXSTC();
-				var pt3Player = new Cowbell.Player.ZXPT3();
+				var stcPlayer = new Cowbell.Player.ZXSTC({stereoMode: 'acb'});
+				var pt3Player = new Cowbell.Player.ZXPT3({stereoMode: 'acb'});
 				var vtxPlayer = new Cowbell.Player.VTX();
 				var modPlayer = new Cowbell.Player.OpenMPT({
 					'pathToLibOpenMPT': '../dist/cowbell/libopenmpt.js'

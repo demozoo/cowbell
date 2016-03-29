@@ -9,15 +9,11 @@
 			}
 
 			var STEREO_MODES = {
-				1: [0.25, 0.5, 0.75], // ABC
-				2: [0.25, 0.75, 0.5], // ACB
-				3: [0.5, 0.25, 0.75], // BAC
-				4: [0.75, 0.25, 0.5], // BCA
-				5: [0.5, 0.75, 0.25], // CAB
-				6: [0.75, 0.5, 0.25]  // CBA
+				1: 'abc', 2: 'acb', 3: 'bac',
+				4: 'bca', 5: 'cab', 6: 'cba'
 			};
-			var stereoMode = vtx[2] & 0x07;
-			var panning = STEREO_MODES[stereoMode] || [0.5, 0.5, 0.5];  // mono
+			var stereoModeId = vtx[2] & 0x07;
+			var stereoMode = STEREO_MODES[stereoModeId] || 'mono';
 
 			var ayFrequency = (vtx[8] << 24) | (vtx[7] << 16) | (vtx[6] << 8) | vtx[5];
 			var commandFrequency = vtx[9];
@@ -87,7 +83,7 @@
 					'ayRegisterLog': registerLog,
 					'ayFrequency': ayFrequency,
 					'commandFrequency': commandFrequency,
-					'panning': panning
+					'stereoMode': stereoMode
 				});
 
 			});

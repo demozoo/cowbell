@@ -2,7 +2,10 @@
 running the original Z80 player routine under emulation */
 
 (function() {
-	function PT3Generator(url, audioCtx) {
+	function PT3Generator(url, audioCtx, playerOpts, trackOpts) {
+		if (!playerOpts) playerOpts = {};
+		if (!trackOpts) trackOpts = {};
+
 		function Memory() {
 			this.read = function(addr) {
 				return _mem[addr];
@@ -63,13 +66,16 @@ running the original Z80 player routine under emulation */
 
 			onReady({
 				'ayRegisterLog': ayRegisterLog,
-				'panning': [0.25, 0.75, 0.5]
+				'ayFrequency': trackOpts.ayFrequency || playerOpts.ayFrequency,
+				'commandFrequency': trackOpts.commandFrequency || playerOpts.commandFrequency,
+				'stereoMode': trackOpts.stereoMode || playerOpts.stereoMode,
+				'panning': trackOpts.panning || playerOpts.panning
 			});
 		});
 	}
 
 
-	Cowbell.Player.ZXPT3 = function() {
-		return new Cowbell.Common.WebAudioPlayer(PT3Generator);
+	Cowbell.Player.ZXPT3 = function(opts) {
+		return new Cowbell.Common.WebAudioPlayer(PT3Generator, opts);
 	};
 })();
