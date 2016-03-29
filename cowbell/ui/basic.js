@@ -1,6 +1,6 @@
 /* Basic UI for the Cowbell audio player */
 
-Cowbell.UI.Basic = function(container, backend, url) {
+Cowbell.UI.Basic = function(container, track) {
 	var audioElement = null;
 
 	var playButton = document.createElement('button');
@@ -22,7 +22,7 @@ Cowbell.UI.Basic = function(container, backend, url) {
 	}
 
 	function initAudioElement() {
-		audioElement = backend.open(url);
+		audioElement = track.open();
 		if (audioElement.readyState >= audioElement.HAVE_METADATA) {
 			initWithMetadata();
 		} else {

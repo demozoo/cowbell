@@ -2,11 +2,13 @@
 such as MP3 and OGG */
 
 Cowbell.Player.Audio = function() {
-	this.open = function(url) {
-		var audio = document.createElement('audio');
-		audio.src = url;
-		document.body.appendChild(audio);
+	this.Track = function(url) {
+		this.open = function() {
+			var audio = document.createElement('audio');
+			audio.src = url;
+			document.body.appendChild(audio);
 
-		return audio;
-	}
+			return audio;
+		};
+	};
 };

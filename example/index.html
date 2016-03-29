@@ -12,37 +12,59 @@
 		<script>
 			function go() {
 				var audioPlayer = new Cowbell.Player.Audio();
-				new Cowbell.UI.Basic(document.getElementById('zipperflies'), audioPlayer, 'music/zipper_flies.mp3');
-
 				var psgPlayer = new Cowbell.Player.PSG();
-				new Cowbell.UI.Basic(document.getElementById('dancingqueen'), psgPlayer, 'music/dancing_queen.psg');
-
 				var stcPlayer = new Cowbell.Player.ZXSTC();
-				new Cowbell.UI.Basic(document.getElementById('worldsapart'), stcPlayer, 'music/gasman_-_worlds_apart.stc');
-
 				var pt3Player = new Cowbell.Player.ZXPT3();
-				new Cowbell.UI.Basic(document.getElementById('summermood'), pt3Player, 'music/summer_mood.pt3');
-
 				var vtxPlayer = new Cowbell.Player.VTX();
-				new Cowbell.UI.Basic(document.getElementById('squarelandstory'), vtxPlayer, 'music/squareland_story.vtx');
-
 				var modPlayer = new Cowbell.Player.OpenMPT();
-				new Cowbell.UI.Basic(document.getElementById('ambientpower'), modPlayer, 'music/ambpower.mod');
-				new Cowbell.UI.Basic(document.getElementById('insideout'), modPlayer, 'music/inside_out.s3m');
+
+				var tracks = [
+					[
+						"Zipper Flies - ihatemornings (MP3)",
+						new audioPlayer.Track('music/zipper_flies.mp3')
+					],
+					[
+						"Dancing Queen - Gasman (PSG)",
+						new psgPlayer.Track('music/dancing_queen.psg')
+					],
+					[
+						"Worlds Apart - Gasman (STC)",
+						new stcPlayer.Track('music/gasman_-_worlds_apart.stc')
+					],
+					[
+						"Summer Mood - Megus (PT3)",
+						new pt3Player.Track('music/summer_mood.pt3')
+					],
+					[
+						"Squareland Story - Asi (VTX)",
+						new vtxPlayer.Track('music/squareland_story.vtx')
+					],
+					[
+						"Ambient Power - Vogue (MOD)",
+						new modPlayer.Track('music/ambpower.mod')
+					],
+					[
+						"Inside Out - Purple Motion (S3M)",
+						new modPlayer.Track('music/inside_out.s3m')
+					]
+				]
+
+				var ul = document.getElementById('tracks');
+				for (var i = 0; i < tracks.length; i++) {
+					var title = tracks[i][0];
+					var track = tracks[i][1];
+					var li = document.createElement('li');
+					li.appendChild(document.createTextNode(title));
+					ul.appendChild(li);
+					new Cowbell.UI.Basic(li, track);
+				}
 			}
 		</script>
 	</head>
 	<body onload="go()">
 		<h1>Cowbell</h1>
 		<h2>a universal web audio player for demoscene music</h2>
-		<ul>
-			<li id="zipperflies">Zipper Flies - ihatemornings (MP3)</li>
-			<li id="dancingqueen">Dancing Queen - Gasman (PSG)</li>
-			<li id="worldsapart">Worlds Apart - Gasman (STC)</li>
-			<li id="summermood">Summer Mood - Megus (PT3)</li>
-			<li id="squarelandstory">Squareland Story - Asi (VTX)</li>
-			<li id="ambientpower">Ambient Power - Vogue (MOD)</li>
-			<li id="insideout">Inside Out - Purple Motion (S3M)</li>
+		<ul id="tracks">
 		</ul>
 	</body>
 </html>
