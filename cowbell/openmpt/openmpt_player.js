@@ -1,10 +1,12 @@
 /* Player for module formats supported by libopenmpt */
 
 (function() {
-	function OpenMPTGenerator(url, audioCtx) {
+	function OpenMPTGenerator(url, audioCtx, playerOpts, trackOpts) {
 		var modulePtr, leftBufferPtr, rightBufferPtr;
 		var maxFramesPerChunk = 4096;
 		var self = this;
+		if (!playerOpts) playerOpts = {};
+		if (!trackOpts) trackOpts = {};
 
 		function initModule(data) {
 			var byteArray = new Int8Array(data);
@@ -16,6 +18,38 @@
 			rightBufferPtr = Module._malloc(4 * maxFramesPerChunk);
 
 			self.duration = Module._openmpt_module_get_duration_seconds(modulePtr);
+		}
+
+		function ensureLibOpenMPT(onReady) {
+			/* TODO: recompile libopenmpt to define a global variable that's less rubbish
+			than 'Module' */
+			if (window.Module && Module._openmpt_module_create_from_memory) {
+				onReady();
+			} else if (playerOpts.pathToLibOpenMPT) {
+				/* load libopenmpt via <script> tag injection */
+				var head = document.getElementsByTagName("head")[0];
+				var script = document.createElement("script");
+				script.src = playerOpts.pathToLibOpenMPT;
+
+				var done = false;
+
+				// Attach handlers for all browsers
+				script.onload = script.onreadystatechange = function(){
+					if (
+						!done && (
+							!this.readyState || this.readyState == "loaded" || this.readyState == "complete"
+						)
+					) {
+						done = true;
+						onReady();
+						head.removeChild(script);
+					}
+				};
+
+				head.appendChild(script);
+			} else {
+				throw "libopenmpt.js not imported and pathToLibOpenMPT not specified";
+			}
 		}
 
 		this.cleanup = function() {
@@ -31,24 +65,26 @@
 		};
 
 		this.load = function(onReady) {
-			this.channelCount = 2;
+			ensureLibOpenMPT(function() {
+				this.channelCount = 2;
 
-			var request = new XMLHttpRequest();
+				var request = new XMLHttpRequest();
 
-			request.addEventListener('error', function(e) {
-				console.log('XHR error', e);
+				request.addEventListener('error', function(e) {
+					console.log('XHR error', e);
+				});
+
+				request.addEventListener('load', function(e) {
+					data = request.response;
+					initModule(data);
+					onReady();
+				});
+
+				/* trigger XHR */
+				request.open('GET', url, true);
+				request.responseType = "arraybuffer";
+				request.send();
 			});
-
-			request.addEventListener('load', function(e) {
-				data = request.response;
-				initModule(data);
-				onReady();
-			});
-
-			/* trigger XHR */
-			request.open('GET', url, true);
-			request.responseType = "arraybuffer";
-			request.send();
 		};
 
 		this.generateAudio = function(outputBuffer) {
@@ -80,7 +116,7 @@
 			Module._openmpt_module_set_position_seconds(modulePtr, position);
 		};
 	}
-	Cowbell.Player.OpenMPT = function() {
-		return new Cowbell.Common.WebAudioPlayer(OpenMPTGenerator);
+	Cowbell.Player.OpenMPT = function(opts) {
+		return new Cowbell.Common.WebAudioPlayer(OpenMPTGenerator, opts);
 	};
 })();

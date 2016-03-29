@@ -9,8 +9,8 @@ with audio data, and seeking to a specified time.
 
 (function() {
 	var audioCtx;
-	Cowbell.Common.WebAudioPlayer = function(generatorConstructor) {
-		this.Track = function(url, opts) {
+	Cowbell.Common.WebAudioPlayer = function(generatorConstructor, playerOpts) {
+		this.Track = function(url, trackOpts) {
 			var generator;
 
 			this.open = function() {
@@ -29,7 +29,7 @@ with audio data, and seeking to a specified time.
 				self.HAVE_ENOUGH_DATA = 4;
 				self.readyState = self.HAVE_NOTHING;
 
-				generator = new generatorConstructor(url, audioCtx);
+				generator = new generatorConstructor(url, audioCtx, playerOpts, trackOpts);
 				var generatorIsReady = false;
 				var playWasRequestedBeforeReady = false;
 				var scriptNode;
