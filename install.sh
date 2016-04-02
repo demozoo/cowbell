@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Provisioning script for installing the build dependencies under Vagrant + Ubuntu
+
 apt-get update
 apt-get install -y pasmo
 
