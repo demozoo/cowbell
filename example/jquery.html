@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Cowbell simple example</title>
+
+		<script src="jquery-2.2.1.js"></script>
+		<script src="../dist/cowbell/cowbell.min.js"></script>
+		<script src="../dist/cowbell/openmpt_player.js"></script>
+
+		<script>
+			$(function() {
+				$('#player-container').cowbell({
+					'ui': Cowbell.UI.Basic,
+					'player': Cowbell.Player.OpenMPT,
+					'url': 'music/ambpower.mod',
+					'playerOpts': {
+						'pathToLibOpenMPT': '../dist/cowbell/libopenmpt.js'
+					},
+					'trackOpts': {},
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="player-container"></div>
+	</body>
+</html>

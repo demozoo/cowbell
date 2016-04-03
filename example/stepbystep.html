@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Cowbell step-by-step example</title>
+
+		<!--
+			1. Import the main Cowbell script, along with any add-on scripts
+			for the file types you want to support on your page
+		-->
+		<script src="../dist/cowbell/cowbell.min.js"></script>
+		<script src="../dist/cowbell/openmpt_player.js"></script>
+
+		<script>
+			window.onload = function() {
+				/*
+					2. Create a Player object of the relevant type for the
+					file type you want to play
+				*/
+				var modPlayer = new Cowbell.Player.OpenMPT({
+					'pathToLibOpenMPT': '../dist/cowbell/libopenmpt.js'
+				});
+
+				/*
+					3. Retrieve a Track object from the Player
+				*/
+				var track = new modPlayer.Track('music/ambpower.mod');
+
+				/*
+					4. Create a UI object to display the player controls
+				*/
+				var container = document.getElementById('player');
+				var playerUI = new Cowbell.UI.Basic(container);
+
+				/*
+					5. Open the track in the player UI
+				*/
+				playerUI.open(track);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="player"></div>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Cowbell simple example</title>
+
+		<script src="../dist/cowbell/cowbell.min.js"></script>
+		<script src="../dist/cowbell/openmpt_player.js"></script>
+
+		<script>
+			window.onload = function() {
+				Cowbell.createPlayer('player-container', {
+					'ui': Cowbell.UI.Basic,
+					'player': Cowbell.Player.OpenMPT,
+					'url': 'music/ambpower.mod',
+					'playerOpts': {
+						'pathToLibOpenMPT': '../dist/cowbell/libopenmpt.js'
+					},
+					'trackOpts': {},
+				});
+			};
+		</script>
+	</head>
+	<body>
+		<div id="player-container"></div>
+	</body>
+</html>
