@@ -42,7 +42,9 @@ dist/cowbell/libopenmpt.js: cowbell/openmpt/libopenmpt.js
 
 dist/cowbell/openmpt_player.js: cowbell/openmpt/openmpt_player.js
 	mkdir -p dist/cowbell/
-	cp cowbell/openmpt/openmpt_player.js dist/cowbell/openmpt_player.js
+	closure-compiler \
+		--js=cowbell/openmpt/openmpt_player.js \
+		--js_output_file=dist/cowbell/openmpt.min.js
 
 build/z80.js: cowbell/zx_spectrum/z80.coffee
 	mkdir -p build
