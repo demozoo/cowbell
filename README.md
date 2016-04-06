@@ -30,6 +30,12 @@ Cowbell also provides a wrapper to simplify the creation of Web Audio API based 
 Audio files, and heavyweight libraries such as libopenmpt, are only loaded at the point of pressing play - so you can embed players into your pages without bloating the page for the rest of your users.
 
 
+Usage
+-----
+
+See `doc/usage.md`.
+
+
 Building
 --------
 
