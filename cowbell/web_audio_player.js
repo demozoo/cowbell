@@ -143,7 +143,7 @@ with audio data, and seeking to a specified time.
 				if (generator.cleanup) {
 					generator.cleanup();
 				}
-			}
+			};
 		};
 	};
 })();

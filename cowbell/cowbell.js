@@ -31,5 +31,5 @@ if (window.jQuery) {
 		this.each(function() {
 			Cowbell.createPlayer(this, opts);
 		});
-	}
+	};
 }
