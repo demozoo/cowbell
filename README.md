@@ -57,7 +57,7 @@ Framework code and AY / Z80 emulation by Matt Westcott; Z80 implementation based
 
 [Original LH4 decompression code](https://github.com/erlandranvinge/lh4.js/tree/master) (for VTX file format) by Erland Ranvinge, based on a mix of Nobuyasu Suehiro's Java implementation and Simon Howard's C version.
 
-ZX Spectrum Soundtracker playback routine (Z80 code) by BZYK.
+ZX Spectrum Soundtracker playback routine (Z80 code) by Bzyk.
 
 ZX Spectrum Protracker 3 playback routine (Z80 code) by Sergey Bulba and Ivan Roshin, from the [Vortex Tracker 2](http://bulba.untergrund.net/main_e.htm) project.
 
