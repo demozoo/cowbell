@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>Cowbell - a universal web audio player for demoscene music</title>
+
+		<link rel="stylesheet" href="stylesheets/styles.css">
+		<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+		<meta name="viewport" content="width=device-width">
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<script src="cowbell/cowbell.min.js"></script>
+		<script src="cowbell/ay_chip.min.js"></script>
+		<script src="cowbell/vtx.min.js"></script>
+		<script src="cowbell/zx.min.js"></script>
+		<script src="cowbell/openmpt.min.js"></script>
+
+		<script>
+			function go() {
+				var audioPlayer = new Cowbell.Player.Audio();
+				var psgPlayer = new Cowbell.Player.PSG();
+				var stcPlayer = new Cowbell.Player.ZXSTC({stereoMode: 'acb'});
+				var pt3Player = new Cowbell.Player.ZXPT3({stereoMode: 'acb'});
+				var vtxPlayer = new Cowbell.Player.VTX();
+				var modPlayer = new Cowbell.Player.OpenMPT({
+					'pathToLibOpenMPT': 'cowbell/libopenmpt.js'
+				});
+
+				var tracks = [
+					[
+						"Zipper Flies - ihatemornings (MP3)",
+						new audioPlayer.Track('music/zipper_flies.mp3')
+					],
+					[
+						"Dancing Queen - Gasman (PSG)",
+						new psgPlayer.Track('music/dancing_queen.psg')
+					],
+					[
+						"Worlds Apart - Gasman (STC)",
+						new stcPlayer.Track('music/gasman_-_worlds_apart.stc')
+					],
+					[
+						"Summer Mood - Megus (PT3)",
+						new pt3Player.Track('music/summer_mood.pt3')
+					],
+					[
+						"Squareland Story - Asi (VTX)",
+						new vtxPlayer.Track('music/squareland_story.vtx')
+					],
+					[
+						"Ambient Power - Vogue (MOD)",
+						new modPlayer.Track('music/ambpower.mod')
+					],
+					[
+						"Inside Out - Purple Motion (S3M)",
+						new modPlayer.Track('music/inside_out.s3m')
+					],
+					[
+						"Rainbow Dash - Radix & Xyce (XM)",
+						new modPlayer.Track('music/radix_xyce_-_rainbow_dash_.xm')
+					]
+				]
+
+				container = document.getElementById('player');
+				player = new Cowbell.UI.Basic(container);
+
+				var selector = document.getElementById('track-select');
+				for (var i = 0; i < tracks.length; i++) {
+					var title = tracks[i][0];
+					var track = tracks[i][1];
+					var option = document.createElement('option');
+					selector.appendChild(option);
+					option.value = i;
+					option.appendChild(document.createTextNode(title));
+				}
+				selector.onchange = function() {
+					var index = parseInt(selector.value, 10);
+					if (!isNaN(index)) {
+						var track = tracks[index][1];
+						player.open(track);
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body onload="go()">
+		<div class="wrapper">
+			<header>
+				<h1>Cowbell</h1>
+				<p>a universal web audio player for demoscene music</p>
+				<p class="view"><a href="http://github.com/demozoo/cowbell">View the Project on GitHub <small>demozoo/cowbell</small></a></p>
+				<ul>
+					<li><a href="downloads/cowbell-0.1.zip">Download <strong>0.1</strong></a></li>
+					<li><a href="https://github.com/demozoo/cowbell/blob/master/doc/usage.md">Usage <strong>Docs</strong></a></li>
+					<li><a href="http://github.com/demozoo/cowbell">Fork On <strong>GitHub</strong></a></li>
+				</ul>
+			</header>
+			<section>
+
+				<select id="track-select">
+					<option value="">Select a track...</option>
+				</select>
+
+				<div id="player"></div>
+
+			</section>
+			<section>
+				<p>Cowbell is an HTML / JavaScript audio player focused on demoscene and tracker music. It aims to bring a wide variety of music file formats - from the obvious ones (MP3, OGG) through the classics (MOD, S3M, XM) to the more 'niche' (PT3, VTX...) - together under a common API and user interface.</p>
+
+				<p>Created by <a href="http://matt.west.co.tt/">Matt Westcott</a> (<a href="https://twitter.com/gasmanic">@gasmanic</a>). Brought to you by <a href="http://demozoo.org/">Demozoo</a></p>
+			</section>
+			<footer>
+				<small><a href="http://orderedlist.com/minimal/">Minimal theme</a> by Steve Smith</small>
+			</footer>
+		</div>
+	</body>
+</html>
