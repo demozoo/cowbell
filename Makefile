@@ -4,7 +4,10 @@ DIST_FILES=\
 	dist/cowbell/vtx.min.js \
 	dist/cowbell/zx.min.js \
 	dist/cowbell/libopenmpt.js \
-	dist/cowbell/openmpt_player.js
+	dist/cowbell/openmpt.min.js \
+	dist/doc/api.md \
+	dist/doc/usage.md \
+	dist/doc/LICENSE
 
 .PHONY: all
 all: $(DIST_FILES)
@@ -45,6 +48,18 @@ dist/cowbell/openmpt_player.js: cowbell/openmpt/openmpt_player.js
 	closure-compiler \
 		--js=cowbell/openmpt/openmpt_player.js \
 		--js_output_file=dist/cowbell/openmpt.min.js
+
+dist/doc/api.md: doc/api.md
+	mkdir -p dist/doc/
+	cp doc/api.md dist/doc/api.md
+
+dist/doc/usage.md: doc/usage.md
+	mkdir -p dist/doc/
+	cp doc/usage.md dist/doc/usage.md
+
+dist/doc/LICENSE: LICENSE
+	mkdir -p dist/doc/
+	cp LICENSE dist/doc/LICENSE
 
 build/z80.js: cowbell/zx_spectrum/z80.coffee
 	mkdir -p build
