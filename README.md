@@ -3,6 +3,9 @@ Cowbell
 
 Cowbell is an HTML / JavaScript audio player that can play diverse audio file formats with a common user interface, with a particular focus on the demoscene and tracker music.
 
+Example
+-------
+[Working demonstration](https://demozoo.github.io/cowbell/)
 
 Features
 --------
