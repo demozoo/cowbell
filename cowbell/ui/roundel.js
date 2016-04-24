@@ -135,7 +135,7 @@ Cowbell.UI.Roundel = function(container) {
 	}
 
 	var mouseUp = function(e) {
-		canvas.removeEventListener('mousemove', mouseMove);
+		window.removeEventListener('mousemove', mouseMove);
 		window.removeEventListener('mouseup', mouseUp);
 		canvas.style.cursor = 'default';
 	};
@@ -153,7 +153,7 @@ Cowbell.UI.Roundel = function(container) {
 
 		setTimeByCanvasCoords(x, y);
 		window.addEventListener('mouseup', mouseUp);
-		canvas.addEventListener('mousemove', mouseMove);
+		window.addEventListener('mousemove', mouseMove);
 		canvas.style.cursor = 'pointer';
 	};
 
