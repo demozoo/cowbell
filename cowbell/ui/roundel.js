@@ -4,55 +4,53 @@ Cowbell.UI.Roundel = function(container) {
 	var audioElement = null;
 	var currentTrack = null;
 
-	var xmlns = "http://www.w3.org/2000/svg";
+	function createSVGElement(name, attrs) {
+		var elem = document.createElementNS("http://www.w3.org/2000/svg", name);
+		if (attrs) {
+			for (var attrName in attrs) {
+				elem.setAttribute(attrName, attrs[attrName]);
+			}
+		}
+		return elem;
+	}
 
-	var canvas = document.createElementNS(xmlns, "svg");
-	canvas.setAttribute("width", "100");
-	canvas.setAttribute("height", "100");
+	var canvas = createSVGElement('svg', {'width': '100', 'height': '100'});
 
-	var progress = document.createElementNS(xmlns, "g");
+	var progress = createSVGElement('g');
 	canvas.appendChild(progress);
 
-	var progressBackground = document.createElementNS(xmlns, "circle");
-	progressBackground.setAttribute("cx", "50");
-	progressBackground.setAttribute("cy", "50");
-	progressBackground.setAttribute("r", "48");
-	progressBackground.setAttribute("fill", "white");
+	var progressBackground = createSVGElement('circle', {
+		'cx': '50', 'cy': '50', 'r': '48', 'fill': 'white'
+	});
 	progress.appendChild(progressBackground);
 
-	var progressBar = document.createElementNS(xmlns, "path");
-	progressBar.setAttribute("fill", "grey");
+	var progressBar = createSVGElement('path', {'fill': 'grey'});
 	progress.appendChild(progressBar);
 
-	var progressOutline = document.createElementNS(xmlns, "circle");
-	progressOutline.setAttribute("cx", "50");
-	progressOutline.setAttribute("cy", "50");
-	progressOutline.setAttribute("r", "48");
-	progressOutline.setAttribute("stroke", "black");
-	progressOutline.setAttribute("stroke-width", "2px");
-	progressOutline.setAttribute("fill", "none");
+	var progressOutline = createSVGElement('circle', {
+		'cx': '50', 'cy': '50', 'r': '48',
+		'stroke': 'black', 'stroke-width': '2px', 'fill': 'none'
+	});
 	progress.appendChild(progressOutline);
 
-	var button = document.createElementNS(xmlns, "g");
+	var button = createSVGElement('g');
 	canvas.appendChild(button);
 
-	var buttonBase = document.createElementNS(xmlns, "circle");
-	buttonBase.setAttribute("cx", "50");
-	buttonBase.setAttribute("cy", "50");
-	buttonBase.setAttribute("r", "35");
-	buttonBase.setAttribute("stroke", "silver");  // disabled state
-	buttonBase.setAttribute("stroke-width", "2px");
-	buttonBase.setAttribute("fill", "white");
+	var buttonBase = createSVGElement('circle', {
+		'cx': '50', 'cy': '50', 'r': '35',
+		'stroke-width': '2px', 'fill': 'white'
+	});
 	button.appendChild(buttonBase);
 
-	var playIcon = document.createElementNS(xmlns, "polygon");
-	playIcon.setAttribute("points", "35,30 35,70 75,50");
-	playIcon.setAttribute("fill", "silver");  // disabled state
+	var playIcon = createSVGElement('polygon', {
+		'points': '35,30 35,70 75,50'
+	});
 	button.appendChild(playIcon);
 
-	var pauseIcon = document.createElementNS(xmlns, "path");
-	pauseIcon.setAttribute("d", "M35,30 L35,70 L45,70 L45,30 L35,30 M55,30 L55,70 L65,70 L65,30, L55,30");
-	pauseIcon.setAttribute("fill", "black");
+	var pauseIcon = createSVGElement('path', {
+		'd': 'M35,30 L35,70 L45,70 L45,30 L35,30 M55,30 L55,70 L65,70 L65,30, L55,30',
+		'fill': 'black'
+	});
 	pauseIcon.style.display = "none";
 	button.appendChild(pauseIcon);
 
@@ -74,8 +72,17 @@ Cowbell.UI.Roundel = function(container) {
 			"M50,50 L50,2 A48,48 0 " + (frac >= 0.5 ? "1" : "0") + ",1 " + endX + "," + endY + " Z"
 		);
 	}
+	function disablePlayButton() {
+		playIcon.setAttribute("fill", "silver");
+		buttonBase.setAttribute("stroke", "silver");
+	}
+	function enablePlayButton() {
+		playIcon.setAttribute("fill", "black");
+		buttonBase.setAttribute("stroke", "black");
+	}
 
 	hideProgress();
+	disablePlayButton();
 
 	function initAudioElement() {
 		audioElement = currentTrack.open();
@@ -152,7 +159,6 @@ Cowbell.UI.Roundel = function(container) {
 		currentTrack = track;
 		audioElement = null;
 		hideProgress();
-		playIcon.setAttribute("fill", "black");  // enabled state
-		buttonBase.setAttribute("stroke", "black");  // enabled state
+		enablePlayButton();
 	};
 };
