@@ -136,6 +136,8 @@ Cowbell.UI.Roundel = function(container) {
 		}
 	}
 
+	var lastX, lastY;
+
 	var mouseUp = function(e) {
 		window.removeEventListener('mousemove', mouseMove);
 		window.removeEventListener('mouseup', mouseUp);
@@ -146,12 +148,28 @@ Cowbell.UI.Roundel = function(container) {
 		var x = e.clientX - canvasRect.left;
 		var y = e.clientY - canvasRect.top;
 
+		/* don't allow scrubbing past the zero point -
+		i.e. from the 1st to the 4th quadrant or vice versa */
+		if (y < 50 && lastY < 50) {
+			if (x < 50 && lastX >= 50) {
+				/* clamp to 0 */
+				audioElement.currentTime = 0;
+				setProgress(0, 0);
+				return;
+			} else if (x >= 50 && lastX < 50) {
+				return;
+			}
+		}
+		lastX = x; lastY = y;
+
 		setTimeByCanvasCoords(x, y);
 	};
 	progress.onmousedown = function(e) {
 		var canvasRect = canvas.getBoundingClientRect();
 		var x = e.clientX - canvasRect.left;
 		var y = e.clientY - canvasRect.top;
+
+		lastX = x; lastY = y;
 
 		setTimeByCanvasCoords(x, y);
 		window.addEventListener('mouseup', mouseUp);
