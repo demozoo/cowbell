@@ -113,11 +113,11 @@ Cowbell.UI.Roundel = function(container) {
 	button.onclick = function() {
 		if (!currentTrack) return;
 		if (!audioElement) {
+			buttonBase.setAttribute('fill', 'silver');
+			canvas.style.cursor = 'progress';
 			initAudioElement();
 		}
 		if (audioElement.paused) {
-			buttonBase.setAttribute('fill', 'silver');
-			canvas.style.cursor = 'progress';
 			audioElement.play();
 		} else {
 			audioElement.pause();
