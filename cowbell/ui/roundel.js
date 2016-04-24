@@ -140,10 +140,18 @@ Cowbell.UI.Roundel = function(container) {
 		canvas.style.cursor = 'default';
 	};
 	var mouseMove = function(e) {
-		setTimeByCanvasCoords(e.offsetX, e.offsetY);
+		var canvasRect = canvas.getBoundingClientRect();
+		var x = e.clientX - canvasRect.left;
+		var y = e.clientY - canvasRect.top;
+
+		setTimeByCanvasCoords(x, y);
 	};
 	progress.onmousedown = function(e) {
-		setTimeByCanvasCoords(e.offsetX, e.offsetY);
+		var canvasRect = canvas.getBoundingClientRect();
+		var x = e.clientX - canvasRect.left;
+		var y = e.clientY - canvasRect.top;
+
+		setTimeByCanvasCoords(x, y);
 		window.addEventListener('mouseup', mouseUp);
 		canvas.addEventListener('mousemove', mouseMove);
 		canvas.style.cursor = 'pointer';
