@@ -107,6 +107,8 @@ Cowbell.UI.Roundel = function(container) {
 		};
 		audioElement.onended = function() {
 			hideProgress();
+			/* don't allow further (invisible) track scrubbing if the track ends while scrubbing */
+			mouseUp();
 		};
 	}
 
