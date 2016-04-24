@@ -140,7 +140,7 @@ with audio data, and seeking to a specified time.
 				return self;
 			};
 			this.close = function() {
-				if (generator.cleanup) {
+				if (generator && generator.cleanup) {
 					generator.cleanup();
 				}
 			};
