@@ -128,7 +128,7 @@ with audio data, and seeking to a specified time.
 
 				self.__defineGetter__('currentTime', function() {
 					if (!hasStartedProcessing) return playFromTime;
-					if (self.paused) return pausedTrackTime;
+					if (self.paused) return pausedAtTrackTime;
 					if (audioCtx.currentTime < playStartTimestamp) return playFromTime;
 					return playFromTime + audioCtx.currentTime - playStartTimestamp;
 				});

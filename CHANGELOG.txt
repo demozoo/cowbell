@@ -6,6 +6,7 @@ Changelog
 
  * Added 'Roundel' UI
  * Fixed error when closing a WebAudioPlayer track that has not begun playback
+ * Fixed error when accessing currentTime on a paused WebAudioPlayer track
 
 
 0.1 (2016-04-11)
