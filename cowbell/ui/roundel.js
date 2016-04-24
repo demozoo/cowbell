@@ -175,6 +175,7 @@ Cowbell.UI.Roundel = function(container) {
 		window.addEventListener('mouseup', mouseUp);
 		window.addEventListener('mousemove', mouseMove);
 		canvas.style.cursor = 'pointer';
+		return false;  /* prevent SVG elements from being dragged around on FF */
 	};
 
 	this.open = function(track) {
