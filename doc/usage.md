@@ -40,7 +40,7 @@ All fields in `options` are optional, but you'll probably want to specify `'url'
 
 * `url`: The URL of the file to be played
 * `player`: The player backend module to use (see 'Available backends' below)
-* `ui`: The user interface module to use. Currently `Cowbell.UI.Basic` is the only one available (and is the default)
+* `ui`: The user interface module to use. Available options are `Cowbell.UI.Basic` (a simple interface with a play/pause button and a slider for seeking) and `Cowbell.UI.Roundel` (a round play/pause button with a seekable progress bar around it, inspired by the Mac OS X finder). (Default is `Cowbell.UI.Basic`)
 * `playerOpts`: A set of configuration options specific to this player backend
 * `trackOpts`: A set of configuration options specific to this track, such as stereo separation
 

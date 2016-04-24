@@ -12,10 +12,10 @@ DIST_FILES=\
 .PHONY: all
 all: $(DIST_FILES)
 
-dist/cowbell/cowbell.min.js: cowbell/cowbell.js cowbell/ui/basic.js cowbell/audio_player.js cowbell/web_audio_player.js
+dist/cowbell/cowbell.min.js: cowbell/cowbell.js cowbell/ui/basic.js cowbell/ui/roundel.js cowbell/audio_player.js cowbell/web_audio_player.js
 	mkdir -p dist/cowbell/
 	closure-compiler \
-		--js=cowbell/cowbell.js --js=cowbell/ui/basic.js \
+		--js=cowbell/cowbell.js --js=cowbell/ui/basic.js --js=cowbell/ui/roundel.js \
 		--js=cowbell/audio_player.js --js=cowbell/web_audio_player.js \
 		--js_output_file=dist/cowbell/cowbell.min.js
 
