@@ -65,7 +65,7 @@
 				]
 
 				container = document.getElementById('player');
-				player = new Cowbell.UI.Basic(container);
+				player = new Cowbell.UI.Roundel(container);
 
 				var selector = document.getElementById('track-select');
 				for (var i = 0; i < tracks.length; i++) {
@@ -94,18 +94,18 @@
 				<p>a universal web audio player for demoscene music</p>
 				<p class="view"><a href="http://github.com/demozoo/cowbell">View the Project on GitHub <small>demozoo/cowbell</small></a></p>
 				<ul>
-					<li><a href="downloads/cowbell-0.1.zip">Download <strong>0.1</strong></a></li>
+					<li><a href="downloads/cowbell-0.2.zip">Download <strong>0.2</strong></a></li>
 					<li><a href="https://github.com/demozoo/cowbell/blob/master/doc/usage.md">Usage <strong>Docs</strong></a></li>
 					<li><a href="http://github.com/demozoo/cowbell">Fork On <strong>GitHub</strong></a></li>
 				</ul>
 			</header>
-			<section>
+			<section style="text-align: center;">
+
+				<div id="player"></div>
 
 				<select id="track-select">
 					<option value="">Select a track...</option>
 				</select>
-
-				<div id="player"></div>
 
 			</section>
 			<section>
