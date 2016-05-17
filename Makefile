@@ -43,7 +43,7 @@ dist/cowbell/libopenmpt.js: cowbell/openmpt/libopenmpt.js
 	mkdir -p dist/cowbell/
 	cp cowbell/openmpt/libopenmpt.js dist/cowbell/libopenmpt.js
 
-dist/cowbell/openmpt_player.js: cowbell/openmpt/openmpt_player.js
+dist/cowbell/openmpt.min.js: cowbell/openmpt/openmpt_player.js
 	mkdir -p dist/cowbell/
 	closure-compiler \
 		--js=cowbell/openmpt/openmpt_player.js \
