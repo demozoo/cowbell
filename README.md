@@ -56,7 +56,7 @@ Authors
 
 Framework code and AY / Z80 emulation by Matt Westcott; Z80 implementation based on the [Fuse](http://fuse-emulator.sourceforge.net/) ZX Spectrum emulator by Philip Kendall, Fredrick Meunier and others.
 
-[Libopenmpt](http://lib.openmpt.org/libopenmpt/) by Olivier Lapicque and others; Javascript / Emscripten build taken from [chiptune2.js](https://github.com/deskjet/chiptune2.js) by Simon Gündling.
+[Libopenmpt](http://lib.openmpt.org/libopenmpt/) by by Jörn Heusipp, Johannes Schultz and others; Javascript / Emscripten build taken from [chiptune2.js](https://github.com/deskjet/chiptune2.js) by Simon Gündling.
 
 [Original LH4 decompression code](https://github.com/erlandranvinge/lh4.js/tree/master) (for VTX file format) by Erland Ranvinge, based on a mix of Nobuyasu Suehiro's Java implementation and Simon Howard's C version.
 
