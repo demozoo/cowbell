@@ -17,6 +17,7 @@ with audio data, and seeking to a specified time.
 				var self = {};
 
 				if (!audioCtx) {
+					var AudioContext = window.AudioContext || window.webkitAudioContext;
 					audioCtx = new AudioContext();
 				}
 

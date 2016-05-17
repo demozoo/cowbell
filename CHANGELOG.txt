@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3 (xxxx-xx-xx)
+~~~~~~~~~~~~~~~~
+
+ * Web audio player now falls back on webkitAudioContext if AudioContext is not available (for Safari compatibility)
+
+
 0.2 (2016-04-24)
 ~~~~~~~~~~~~~~~~
 
