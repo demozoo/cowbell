@@ -65,8 +65,9 @@
 		};
 
 		this.load = function(onReady) {
+			var self = this;
 			ensureLibOpenMPT(function() {
-				this.channelCount = 2;
+				self.channelCount = 2;
 
 				var request = new XMLHttpRequest();
 
