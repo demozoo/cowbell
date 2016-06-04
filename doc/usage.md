@@ -141,7 +141,7 @@ Player for the .VTX format, an LH5-compressed stream of AY / YM sound chip comma
 
 *Imports needed:* `cowbell.min.js`, `ay_chip.min.js`, `zx.min.js`
 
-Player for the .STC (ZX Spectrum Soundtracker) format, running the original player routine under Z80 emulation.
+Player for the .STC (ZX Spectrum Soundtracker) format.
 
 *Options: (can be specified as either player or track opts)*
 

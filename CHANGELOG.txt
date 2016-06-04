@@ -6,6 +6,7 @@ Changelog
 
  * Web audio player now falls back on webkitAudioContext if AudioContext is not available (for Safari compatibility)
  * Fixed channel count initialisation for libopenmpt (for Safari compatibility)
+ * Replaced Z80-emulated version of the ZX Spectrum STC player code with a native Javascript port that's about 3 times faster
 
 
 0.2 (2016-04-24)

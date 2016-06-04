@@ -16,7 +16,7 @@ MP3, OGG (and whatever else your browser supports natively), MOD, XM, S3M, IT (a
 
 ### Highly accurate playback engines
 
-Getting every last detail and edge case of demoscene music formats right is hard, and so Cowbell is built on top of existing tried-and-tested playback engines. For tracker music formats, we use an Emscripten build of libopenmpt, the most mature and comprehensively-tested module player library available. For ZX Spectrum formats, we run the original player routines under Z80 emulation.
+Getting every last detail and edge case of demoscene music formats right is hard, and so Cowbell is built on top of existing tried-and-tested playback engines. For tracker music formats, we use an Emscripten build of libopenmpt, the most mature and comprehensively-tested module player library available. Players for ZX Spectrum formats are either a direct translation of the original Z80 player routines, or the Z80 player routines themselves running under emulation.
 
 ### Play / pause / seek controls
 
@@ -59,8 +59,6 @@ Framework code and AY / Z80 emulation by Matt Westcott; Z80 implementation based
 [Libopenmpt](http://lib.openmpt.org/libopenmpt/) by by Jörn Heusipp, Johannes Schultz and others; Javascript / Emscripten build taken from [chiptune2.js](https://github.com/deskjet/chiptune2.js) by Simon Gündling.
 
 [Original LH4 decompression code](https://github.com/erlandranvinge/lh4.js/tree/master) (for VTX file format) by Erland Ranvinge, based on a mix of Nobuyasu Suehiro's Java implementation and Simon Howard's C version.
-
-ZX Spectrum Soundtracker playback routine (Z80 code) by Bzyk.
 
 ZX Spectrum Protracker 3 playback routine (Z80 code) by Sergey Bulba and Ivan Roshin, from the [Vortex Tracker 2](http://bulba.untergrund.net/main_e.htm) project.
 
