@@ -86,9 +86,10 @@ clean:
 
 .PHONY: libopenmpt
 libopenmpt:
+	mkdir -p build
 	cd build && \
 	wget https://buildbot.openmpt.org/builds/auto/src/libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz -O libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz && \
 	tar xzf libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz && \
 	cd libopenmpt-$(LIBOPENMPT_BUILD_VERSION)/ && \
-	make CONFIG=emscripten && \
+	make CONFIG=emscripten LDFLAGS="-s EXPORT_NAME=\"'LibOpenMPT'\"" && \
 	cp bin/libopenmpt.js bin/libopenmpt.js.mem ../../cowbell/openmpt/
