@@ -50,6 +50,10 @@ With all that done, run:
 
 from the root level.
 
+This setup does not include Emscripten <http://emscripten.org/>, required to build the libopenmpt library. To include this (an addition which requires 4Gb of memory and possibly an hour or more of build time), you should instead run `vagrant up emscripten` then `vagrant ssh emscripten`. You can then edit the `LIBOPENMPT_BUILD_VERSION` line in the Makefile to point to the libopenmpt version you wish to build, and then run:
+
+    make libopenmpt
+
 
 Authors
 -------

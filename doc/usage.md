@@ -108,18 +108,18 @@ This provides support for the file types that your browser can play natively thr
 
 ### Cowbell.Player.OpenMPT
 
-*Imports needed:* `cowbell.min.js`, `openmpt.min.js`, `libopenmpt.js` (optional, see below)
+*Imports needed:* `cowbell.min.js`, `openmpt.min.js`
 
 A JavaScript port of the [libopenmpt](http://lib.openmpt.org/libopenmpt/) library, which provides highly accurate playback of a wide variety of PC / Amiga tracker formats. The full list of supported file types is:
 
 mod s3m xm it mptm stm nst m15 stk wow ult 669 mtm med far mdl ams dsm amf okt dmf ptm psm mt2 dbm digi imf j2b gdm umx plm mo3 xpk ppm mmcmp
 
 
-Since the main `libopenmpt.js` engine is over 2Mb in size, we recommend importing this 'lazily' via the `pathToLibOpenMPT` option, rather than importing it with a `<script>` tag as usual - that way, it will only be downloaded when the user starts playback, rather than on every page load.
+This backend additionally depends on the `libopenmpt.js` library (and the accompanying resource file `libopenmpt.js.mem`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, since it's over 2Mb in size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibOpenMPT` option.
 
 *Options:*
 
-* `pathToLibOpenMPT` - the URL to libopenmpt.js, if this has not been imported directly via a `<script>` tag
+* `pathToLibOpenMPT` - the URL to libopenmpt.js
 
 ### Cowbell.Player.PSG
 
