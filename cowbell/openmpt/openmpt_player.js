@@ -23,13 +23,15 @@
 		function ensureLibOpenMPT(onReady) {
 			/* TODO: recompile libopenmpt to define a global variable that's less rubbish
 			than 'Module' */
-			if (window.Module && Module._openmpt_module_create_from_memory) {
-				onReady();
-			} else if (playerOpts.pathToLibOpenMPT) {
+			if (playerOpts.pathToLibOpenMPT) {
 				/* load libopenmpt via <script> tag injection */
 				var head = document.getElementsByTagName("head")[0];
 				var script = document.createElement("script");
 				script.src = playerOpts.pathToLibOpenMPT;
+
+				window.Module = {
+					memoryInitializerPrefixURL: playerOpts.pathToLibOpenMPT.replace(/[^/]+$/, '')
+				};
 
 				var done = false;
 
@@ -48,7 +50,7 @@
 
 				head.appendChild(script);
 			} else {
-				throw "libopenmpt.js not imported and pathToLibOpenMPT not specified";
+				throw "pathToLibOpenMPT not specified";
 			}
 		}
 

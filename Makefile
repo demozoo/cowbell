@@ -1,9 +1,12 @@
+LIBOPENMPT_BUILD_VERSION = 0.2.6535
+
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
 	dist/cowbell/ay_chip.min.js \
 	dist/cowbell/vtx.min.js \
 	dist/cowbell/zx.min.js \
 	dist/cowbell/libopenmpt.js \
+	dist/cowbell/libopenmpt.js.mem \
 	dist/cowbell/openmpt.min.js \
 	dist/doc/api.md \
 	dist/doc/usage.md \
@@ -43,6 +46,10 @@ dist/cowbell/libopenmpt.js: cowbell/openmpt/libopenmpt.js
 	mkdir -p dist/cowbell/
 	cp cowbell/openmpt/libopenmpt.js dist/cowbell/libopenmpt.js
 
+dist/cowbell/libopenmpt.js.mem: cowbell/openmpt/libopenmpt.js.mem
+	mkdir -p dist/cowbell/
+	cp cowbell/openmpt/libopenmpt.js.mem dist/cowbell/libopenmpt.js.mem
+
 dist/cowbell/openmpt.min.js: cowbell/openmpt/openmpt_player.js
 	mkdir -p dist/cowbell/
 	closure-compiler \
@@ -76,3 +83,12 @@ build/pt3_player.bin: cowbell/zx_spectrum/pt3_player.asm
 .PHONY: clean
 clean:
 	rm -rf build dist
+
+.PHONY: libopenmpt
+libopenmpt:
+	cd build && \
+	wget https://buildbot.openmpt.org/builds/auto/src/libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz -O libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz && \
+	tar xzf libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz && \
+	cd libopenmpt-$(LIBOPENMPT_BUILD_VERSION)/ && \
+	make CONFIG=emscripten && \
+	cp bin/libopenmpt.js bin/libopenmpt.js.mem ../../cowbell/openmpt/

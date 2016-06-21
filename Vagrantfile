@@ -6,6 +6,11 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :shell, :path => "install.sh"
 
+  config.vm.provider "virtualbox" do |vb|
+    # Keep time in sync with host machine (avoids Makefile weirdness)
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
+  end
+
   # Default config: a lightweight box that doesn't include the emscripten compiler.
   # It's recommended to use this, unless you plan to rebuild libopenmpt.
   # To build and use this box:
