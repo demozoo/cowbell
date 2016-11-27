@@ -21,7 +21,14 @@
 		}
 
 		function ensureLibOpenMPT(onReady) {
-			if (playerOpts.pathToLibOpenMPT) {
+			if (!playerOpts.pathToLibOpenMPT) {
+				throw "pathToLibOpenMPT not specified";
+			}
+
+			if (window.LibOpenMPT && window.LibOpenMPT._openmpt_module_create_from_memory) {
+				/* LibOpenMPT already loaded */
+				onReady();
+			} else {
 				/* load libopenmpt via <script> tag injection */
 				var head = document.getElementsByTagName("head")[0];
 				var script = document.createElement("script");
@@ -47,8 +54,6 @@
 				};
 
 				head.appendChild(script);
-			} else {
-				throw "pathToLibOpenMPT not specified";
 			}
 		}
 
