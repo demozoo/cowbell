@@ -34,12 +34,13 @@ dist/cowbell/vtx.min.js: cowbell/ay_chip/lh4.js cowbell/ay_chip/vtx_player.js
 		--js=cowbell/ay_chip/lh4.js --js=cowbell/ay_chip/vtx_player.js \
 		--js_output_file=dist/cowbell/vtx.min.js
 
-dist/cowbell/zx.min.js: build/z80.js cowbell/zx_spectrum/stc_player.js build/pt3_player_bin.js cowbell/zx_spectrum/pt3_player.js
+dist/cowbell/zx.min.js: build/z80.js cowbell/zx_spectrum/stc_player.js build/pt3_player_bin.js cowbell/zx_spectrum/pt3_player.js build/sqt_player_bin.js cowbell/zx_spectrum/sqt_player.js
 	mkdir -p dist/cowbell/
 	closure-compiler \
 		--js=build/z80.js \
 		--js=cowbell/zx_spectrum/stc_player.js \
 		--js=build/pt3_player_bin.js --js=cowbell/zx_spectrum/pt3_player.js \
+		--js=build/sqt_player_bin.js --js=cowbell/zx_spectrum/sqt_player.js \
 		--js_output_file=dist/cowbell/zx.min.js
 
 dist/cowbell/libopenmpt.js: cowbell/openmpt/libopenmpt.js
@@ -79,6 +80,14 @@ build/pt3_player_bin.js: build/pt3_player.bin
 build/pt3_player.bin: cowbell/zx_spectrum/pt3_player.asm
 	mkdir -p build
 	pasmo cowbell/zx_spectrum/pt3_player.asm build/pt3_player.bin
+
+build/sqt_player_bin.js: build/sqt_player.bin
+	mkdir -p build
+	perl bin2js.pl build/sqt_player.bin Cowbell.Common.SQTPlayerBin > build/sqt_player_bin.js
+
+build/sqt_player.bin: cowbell/zx_spectrum/sqt_player.asm
+	mkdir -p build
+	pasmo cowbell/zx_spectrum/sqt_player.asm build/sqt_player.bin
 
 .PHONY: clean
 clean:

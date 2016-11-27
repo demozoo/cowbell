@@ -158,3 +158,12 @@ Player for the .STC (ZX Spectrum Soundtracker) format.
 Player for the .PT3 (ZX Spectrum ProTracker 3) format, running the universal Vortex Tracker 2 player routine under Z80 emulation.
 
 *Options:* Same as for `Cowbell.Player.ZXSTC`
+
+
+## Cowbell.Player.ZXSQT
+
+*Imports needed:* `cowbell.min.js`, `ay_chip.min.js`, `zx.min.js`
+
+Player for the .SQT (ZX Spectrum SQ-Tracker) format, running the original player routine under Z80 emulation.
+
+*Options:* Same as for `Cowbell.Player.ZXSTC`

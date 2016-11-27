@@ -9,6 +9,7 @@ Changelog
  * Replaced Z80-emulated version of the ZX Spectrum STC player code with a native Javascript port that's about 3 times faster
  * Added build steps for Emscripten and libopenmpt to the development VM, as an optional install
  * Updated the libopenmpt backend to handle the libopenmpt.js.mem file created by newer versions of Emscripten. NOTE: As a result of this change, use of the `pathToLibOpenMPT` option is now compulsory - it is no longer valid to import libopenmpt.js directly via a `script` tag.
+ * Added ZX Spectrum SQ-Tracker (.sqt) file format support
 
 
 0.2 (2016-04-24)
