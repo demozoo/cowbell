@@ -84,7 +84,9 @@ For file formats that are not natively playable by the browser, a `Player` backe
 where `opts` is a dictionary of options specific to the player backend. The generator object passed as the first parameter to `WebAudioPlayer` then needs to implement the following API:
 
 * `generator = new Generator(url, audioCtx, playerOpts, trackOpts);` - the constructor for the `Generator` object receives the URL to the track, the [AudioContext](https://www.w3.org/TR/webaudio/#AudioContext) object (primarily useful for finding out the sample rate, `audioCtx.sampleRate`), the player-specific options (possibly null) and the track-specific options (possibly null).
-* `generator.load(onReadyCallback)` - open the audio file and call `onReadyCallback()` when the generator is ready to begin generating audio data
+* `generator.load(onReadyCallback)` - open the audio file and call `onReadyCallback()` when the generator is ready to begin generating audio data. Before calling `onReadyCallback()` the properties `channelCount` and `duration` must be defined on the generator object.
+* `generator.channelCount` - property indicating the number of output channels; WebAudioPlayer will return an AudioBuffer with this number of channels. This must be defined before the onReadyCallback passed to `generator.load` is called
+* `generator.duration` - property indicating duration of the track in seconds. This must be defined before the onReadyCallback passed to `generator.load` is called
 * `generator.generateAudio(outputBuffer)` - fill `outputBuffer` (an [AudioBuffer](https://www.w3.org/TR/webaudio/#AudioBuffer) object) with audio data, and return the number of audio frames written; writing less than the full buffer size indicates the end of the track
 * `generator.seek(timeInSeconds)` - set the playback position (i.e. the data that will be generated on the next call to `generateAudio`) to `timeInSeconds`
 * `generator.cleanup()` - release any resources associated with the loaded track
