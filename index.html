@@ -24,6 +24,7 @@
 				var psgPlayer = new Cowbell.Player.PSG();
 				var stcPlayer = new Cowbell.Player.ZXSTC({stereoMode: 'acb'});
 				var pt3Player = new Cowbell.Player.ZXPT3({stereoMode: 'acb'});
+				var sqtPlayer = new Cowbell.Player.ZXSQT({stereoMode: 'acb'});
 				var vtxPlayer = new Cowbell.Player.VTX();
 				var modPlayer = new Cowbell.Player.OpenMPT({
 					'pathToLibOpenMPT': 'cowbell/libopenmpt.js'
@@ -61,6 +62,10 @@
 					[
 						"Rainbow Dash - Radix & Xyce (XM)",
 						new modPlayer.Track('music/radix_xyce_-_rainbow_dash_.xm')
+					],
+					[
+						"Through Poland - Factor6 (SQT)",
+						new sqtPlayer.Track('music/through_poland.sqt')
 					]
 				]
 
@@ -94,7 +99,7 @@
 				<p>a universal web audio player for demoscene music</p>
 				<p class="view"><a href="http://github.com/demozoo/cowbell">View the Project on GitHub <small>demozoo/cowbell</small></a></p>
 				<ul>
-					<li><a href="downloads/cowbell-0.2.zip">Download <strong>0.2</strong></a></li>
+					<li><a href="downloads/cowbell-0.3.zip">Download <strong>0.3</strong></a></li>
 					<li><a href="https://github.com/demozoo/cowbell/blob/master/doc/usage.md">Usage <strong>Docs</strong></a></li>
 					<li><a href="http://github.com/demozoo/cowbell">Fork On <strong>GitHub</strong></a></li>
 				</ul>
