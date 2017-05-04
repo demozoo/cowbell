@@ -1,4 +1,4 @@
-LIBOPENMPT_BUILD_VERSION = 0.3.0-pre.2+r7430
+LIBOPENMPT_BUILD_VERSION = 7785
 
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
@@ -97,8 +97,8 @@ clean:
 libopenmpt:
 	mkdir -p build
 	cd build && \
-	wget https://buildbot.openmpt.org/builds/auto/src/libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz -O libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz && \
-	tar xzf libopenmpt-$(LIBOPENMPT_BUILD_VERSION).tar.gz && \
-	cd libopenmpt-$(LIBOPENMPT_BUILD_VERSION)/ && \
-	make CONFIG=emscripten LDFLAGS="-s EXPORT_NAME=\"'LibOpenMPT'\"" && \
+	svn export -r $(LIBOPENMPT_BUILD_VERSION) https://source.openmpt.org/svn/openmpt/trunk/OpenMPT/ openmpt-trunk && \
+	cd openmpt-trunk/ && \
+	make clean && \
+	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 LDFLAGS="-s EXPORT_NAME=\"'LibOpenMPT'\"" && \
 	cp bin/libopenmpt.js bin/libopenmpt.js.mem ../../cowbell/openmpt/
