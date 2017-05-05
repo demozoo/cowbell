@@ -97,7 +97,7 @@ clean:
 libopenmpt:
 	mkdir -p build
 	cd build && \
-	svn export -r $(LIBOPENMPT_BUILD_VERSION) https://source.openmpt.org/svn/openmpt/trunk/OpenMPT/ openmpt-trunk && \
+	svn checkout -r $(LIBOPENMPT_BUILD_VERSION) https://source.openmpt.org/svn/openmpt/trunk/OpenMPT/ openmpt-trunk && \
 	cd openmpt-trunk/ && \
 	make clean && \
 	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 LDFLAGS="-s EXPORT_NAME=\"'LibOpenMPT'\"" && \
