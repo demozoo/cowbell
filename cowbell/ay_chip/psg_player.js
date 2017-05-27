@@ -25,7 +25,7 @@
 						frameCount = 1;
 						break;
 					} else if (command == 0xfe) {
-						frameCount = psg[index];
+						frameCount = psg[index] * 4;
 						index++;
 						break;
 					} else if (command < 14) {
