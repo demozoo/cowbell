@@ -3,7 +3,7 @@
 # Provisioning script for installing the build dependencies under Vagrant + Ubuntu
 
 apt-get update
-apt-get install -y pasmo
+apt-get install -y pasmo make
 
 # install Node.js + coffeescript
 # as per instructions on https://github.com/nodesource/distributions
