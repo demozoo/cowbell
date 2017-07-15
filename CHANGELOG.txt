@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.4 (xxxx-xx-xx)
+~~~~~~~~~~~~~~~~
+
+ * Fixed PSG player to interpret 0xfe commands correctly
+
+
 0.3 (2016-11-28)
 ~~~~~~~~~~~~~~~~
 
