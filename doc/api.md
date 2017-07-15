@@ -49,6 +49,7 @@ An `AudioElement` object is the thing that actually produces sound, implementing
 * `audioElement.play()` - begin or resume playback
 * `audioElement.pause()` - pause playback
 * `audioElement.paused` - read-only, indicates whether playback is currently paused
+* `audioElement.seekable` - read-only, returns a TimeRanges object representing the time ranges we can seek to; in practice, UIs will not support partially seekable tracks, and will treat any object returned here with a `length` property of 0 as "not seekable", and a `length` property greater than 0 as "fully seekable"
 * `audioElement.currentTime` - read/write, returns the current playback position in seconds or can be set to seek to a given position
 * `audioElement.onloadedmetadata` - event handler fired when metadata has been loaded (i.e. `audioElement.duration` becomes available)
 * `audioElement.onplay` - event handler fired when playback has started or resumed
@@ -84,9 +85,11 @@ For file formats that are not natively playable by the browser, a `Player` backe
 where `opts` is a dictionary of options specific to the player backend. The generator object passed as the first parameter to `WebAudioPlayer` then needs to implement the following API:
 
 * `generator = new Generator(url, audioCtx, playerOpts, trackOpts);` - the constructor for the `Generator` object receives the URL to the track, the [AudioContext](https://www.w3.org/TR/webaudio/#AudioContext) object (primarily useful for finding out the sample rate, `audioCtx.sampleRate`), the player-specific options (possibly null) and the track-specific options (possibly null).
-* `generator.load(onReadyCallback)` - open the audio file and call `onReadyCallback()` when the generator is ready to begin generating audio data. Before calling `onReadyCallback()` the properties `channelCount` and `duration` must be defined on the generator object.
+* `generator.load(onReadyCallback)` - open the audio file and call `onReadyCallback()` when the generator is ready to begin generating audio data. Before calling `onReadyCallback()` the properties `channelCount`, `duration` and `seekable` must be defined on the generator object.
 * `generator.channelCount` - property indicating the number of output channels; WebAudioPlayer will return an AudioBuffer with this number of channels. This must be defined before the onReadyCallback passed to `generator.load` is called
 * `generator.duration` - property indicating duration of the track in seconds. This must be defined before the onReadyCallback passed to `generator.load` is called
+* `generator.seekable` - boolean property indicating whether it is possible to seek to an arbitrary position in this track
 * `generator.generateAudio(outputBuffer)` - fill `outputBuffer` (an [AudioBuffer](https://www.w3.org/TR/webaudio/#AudioBuffer) object) with audio data, and return the number of audio frames written; writing less than the full buffer size indicates the end of the track
-* `generator.seek(timeInSeconds)` - set the playback position (i.e. the data that will be generated on the next call to `generateAudio`) to `timeInSeconds`
+* `generator.reset()` - set the playback position (i.e. the data that will be generated on the next call to `generateAudio`) to the start of the track. Will be called before the first call to generateAudio, and when the track is stopped or reaches its end
+* `generator.seek(timeInSeconds)` - required if `generator.seekable` is true; set the playback position (i.e. the data that will be generated on the next call to `generateAudio`) to `timeInSeconds`
 * `generator.cleanup()` - release any resources associated with the loaded track

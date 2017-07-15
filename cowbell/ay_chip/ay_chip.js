@@ -227,6 +227,8 @@
 		var framesToNextCommandFrame = 0;
 		var nextCommandFrameIndex = 0;
 
+		this.seekable = true;
+
 		this.seek = function(position) {
 			var frameNum = position * audioCtx.sampleRate;
 			nextCommandFrameIndex = Math.floor(frameNum / framesPerCommandFrame);
@@ -239,6 +241,10 @@
 			framesToNextCommandFrame = framesPerCommandFrame - (frameNum % framesPerCommandFrame);
 			nextCommandFrameIndex++;
 		};
+
+		this.reset = function() {
+			this.seek(0);
+		}
 
 		this.generateAudio = function(outputBuffer) {
 			var framesGenerated = 0;

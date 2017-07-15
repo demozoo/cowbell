@@ -44,6 +44,29 @@ with audio data, and seeking to a specified time.
 					generatorIsReady = true;
 					self.readyState = self.HAVE_ENOUGH_DATA;
 					self.duration = generator.duration;
+					if (generator.seekable) {
+						self.seekable = {
+							'length': 1,
+							'start': function(i) {
+								if (i !== 0) throw "Out of range";
+								return 0;
+							},
+							'end': function(i) {
+								if (i !== 0) throw "Out of range";
+								return generator.duration;
+							}
+						};
+					} else {
+						self.seekable = {
+							'length': 0,
+							'start': function(i) {
+								throw "Out of range";
+							},
+							'end': function(i) {
+								throw "Out of range";
+							}
+						};
+					}
 					seek(0);
 					if (self.onloadedmetadata) self.onloadedmetadata();
 					if (playWasRequestedBeforeReady) self.play();
@@ -51,7 +74,11 @@ with audio data, and seeking to a specified time.
 
 				function seek(newTime) {
 					if (scriptNode) scriptNode.disconnect(0);
-					generator.seek(newTime);
+					if (newTime > 0) {
+						generator.seek(newTime);
+					} else {
+						generator.reset();
+					}
 					playFromTime = newTime;
 					hasStartedProcessing = false;
 					scriptNode = audioCtx.createScriptProcessor(BUFFER_SIZE, 0, generator.channelCount);
@@ -135,7 +162,9 @@ with audio data, and seeking to a specified time.
 				});
 
 				self.__defineSetter__('currentTime', function(newTime) {
-					seek(newTime);
+					if (generator.seekable || newTime === 0) {
+						seek(newTime);
+					}
 				});
 
 				return self;

@@ -127,7 +127,7 @@ Cowbell.UI.Roundel = function(container) {
 	};
 
 	function setTimeByCanvasCoords(x, y) {
-		if (audioElement && audioElement.duration) {
+		if (audioElement && audioElement.duration && audioElement.seekable && audioElement.seekable.length) {
 			var angle = Math.atan2(x - 50, 50 - y);
 			var frac = (angle / (Math.PI * 2) + 1) % 1;
 			var currentTime = audioElement.duration * frac;
@@ -154,7 +154,10 @@ Cowbell.UI.Roundel = function(container) {
 			if (x < 50 && lastX >= 50) {
 				/* clamp to 0 */
 				audioElement.currentTime = 0;
-				setProgress(0, 0);
+				/* non-seekable tracks might not let us do this, so check the result */
+				if (audioElement.currentTime === 0) {
+					setProgress(0, 0);
+				}
 				return;
 			} else if (x >= 50 && lastX < 50) {
 				return;

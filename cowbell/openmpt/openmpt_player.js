@@ -118,9 +118,15 @@
 			return framesRendered;
 		};
 
+		this.seekable = true;
+
 		this.seek = function(position) {
 			LibOpenMPT._openmpt_module_set_position_seconds(modulePtr, position);
 		};
+
+		this.reset = function() {
+			this.seek(0);
+		}
 	}
 	Cowbell.Player.OpenMPT = function(opts) {
 		return new Cowbell.Common.WebAudioPlayer(OpenMPTGenerator, opts);
