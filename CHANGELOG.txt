@@ -6,6 +6,7 @@ Changelog
 
  * Added .sid file format support, via jsSID by Mihaly Horvath (Hermit)
  * Fixed PSG player to interpret 0xfe commands correctly
+ * Updated libopenmpt to version 0.3.0-pre.3+r7785
 
 
 0.3 (2016-11-28)
