@@ -106,6 +106,20 @@ This provides support for the file types that your browser can play natively thr
 
 *Options:* None
 
+## Cowbell.Player.JSSID
+
+*Imports needed:* `cowbell.min.js`, `jssid.min.js`
+
+[jsSID](http://hermit.sidrip.com)-based player for the .SID format for Commodore 64 music.
+
+*Player options:*
+
+* `backgroundNoise`: Background noise level. Default: 0.0005
+
+*Track options:*
+
+* `duration`: Duration of track in seconds. If not specified (or null), plays forever
+
 ### Cowbell.Player.OpenMPT
 
 *Imports needed:* `cowbell.min.js`, `openmpt.min.js`

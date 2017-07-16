@@ -7,6 +7,7 @@
 		<script src="../dist/cowbell/vtx.min.js"></script>
 		<script src="../dist/cowbell/zx.min.js"></script>
 		<script src="../dist/cowbell/openmpt.min.js"></script>
+		<script src="../dist/cowbell/jssid.min.js"></script>
 
 		<script>
 			function go() {
@@ -19,6 +20,7 @@
 				var modPlayer = new Cowbell.Player.OpenMPT({
 					'pathToLibOpenMPT': '../dist/cowbell/libopenmpt.js'
 				});
+				var sidPlayer = new Cowbell.Player.JSSID();
 
 				var tracks = [
 					[
@@ -56,6 +58,10 @@
 					[
 						"Through Poland - Factor6 (SQT)",
 						new sqtPlayer.Track('music/through_poland.sqt')
+					],
+					[
+						"Cybernoid - Jeroen Tel (SID)",
+						new sidPlayer.Track('music/cybernoid.sid')
 					]
 				]
 

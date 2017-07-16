@@ -4,6 +4,7 @@ Changelog
 0.4 (xxxx-xx-xx)
 ~~~~~~~~~~~~~~~~
 
+ * Added .sid file format support, via jsSID by Mihaly Horvath (Hermit)
  * Fixed PSG player to interpret 0xfe commands correctly
 
 

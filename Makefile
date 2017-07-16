@@ -5,6 +5,7 @@ DIST_FILES=\
 	dist/cowbell/ay_chip.min.js \
 	dist/cowbell/vtx.min.js \
 	dist/cowbell/zx.min.js \
+	dist/cowbell/jssid.min.js \
 	dist/cowbell/libopenmpt.js \
 	dist/cowbell/libopenmpt.js.mem \
 	dist/cowbell/openmpt.min.js \
@@ -56,6 +57,12 @@ dist/cowbell/openmpt.min.js: cowbell/openmpt/openmpt_player.js
 	closure-compiler \
 		--js=cowbell/openmpt/openmpt_player.js \
 		--js_output_file=dist/cowbell/openmpt.min.js
+
+dist/cowbell/jssid.min.js: cowbell/jssid.js
+	mkdir -p dist/cowbell/
+	closure-compiler \
+		--js=cowbell/jssid.js \
+		--js_output_file=dist/cowbell/jssid.min.js
 
 dist/doc/api.md: doc/api.md
 	mkdir -p dist/doc/

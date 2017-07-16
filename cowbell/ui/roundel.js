@@ -64,7 +64,7 @@ Cowbell.UI.Roundel = function(container) {
 		progress.style.display = 'none';
 	}
 	function setProgress(val, frac) {
-		angle = frac * 2 * Math.PI;
+		angle = Math.min(frac, 0.999999) * 2 * Math.PI;
 		endX = 50 + 48 * Math.sin(angle);
 		endY = 50 - 48 * Math.cos(angle);
 		progressBar.setAttribute(
