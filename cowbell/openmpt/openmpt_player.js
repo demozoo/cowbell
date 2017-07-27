@@ -10,14 +10,14 @@
 
 		function initModule(data) {
 			var byteArray = new Int8Array(data);
-			var ptrToFile = LibOpenMPT._malloc(byteArray.byteLength);
-			LibOpenMPT.HEAPU8.set(byteArray, ptrToFile);
+			var ptrToFile = libopenmpt._malloc(byteArray.byteLength);
+			libopenmpt.HEAPU8.set(byteArray, ptrToFile);
 
-			modulePtr = LibOpenMPT._openmpt_module_create_from_memory(ptrToFile, byteArray.byteLength, 0, 0, 0);
-			leftBufferPtr  = LibOpenMPT._malloc(4 * maxFramesPerChunk);
-			rightBufferPtr = LibOpenMPT._malloc(4 * maxFramesPerChunk);
+			modulePtr = libopenmpt._openmpt_module_create_from_memory(ptrToFile, byteArray.byteLength, 0, 0, 0);
+			leftBufferPtr  = libopenmpt._malloc(4 * maxFramesPerChunk);
+			rightBufferPtr = libopenmpt._malloc(4 * maxFramesPerChunk);
 
-			self.duration = LibOpenMPT._openmpt_module_get_duration_seconds(modulePtr);
+			self.duration = libopenmpt._openmpt_module_get_duration_seconds(modulePtr);
 		}
 
 		function ensureLibOpenMPT(onReady) {
@@ -25,8 +25,8 @@
 				throw "pathToLibOpenMPT not specified";
 			}
 
-			if (window.LibOpenMPT && window.LibOpenMPT._openmpt_module_create_from_memory) {
-				/* LibOpenMPT already loaded */
+			if (window.libopenmpt && window.libopenmpt._openmpt_module_create_from_memory) {
+				/* libopenmpt already loaded */
 				onReady();
 			} else {
 				/* load libopenmpt via <script> tag injection */
@@ -34,7 +34,7 @@
 				var script = document.createElement("script");
 				script.src = playerOpts.pathToLibOpenMPT;
 
-				window.LibOpenMPT = {
+				window.libopenmpt = {
 					memoryInitializerPrefixURL: playerOpts.pathToLibOpenMPT.replace(/[^/]+$/, '')
 				};
 
@@ -59,13 +59,13 @@
 
 		this.cleanup = function() {
 			if (modulePtr) {
-				LibOpenMPT._openmpt_module_destroy(modulePtr);
+				libopenmpt._openmpt_module_destroy(modulePtr);
 			}
 			if (leftBufferPtr) {
-				LibOpenMPT._free(leftBufferPtr);
+				libopenmpt._free(leftBufferPtr);
 			}
 			if (rightBufferPtr) {
-				LibOpenMPT._free(rightBufferPtr);
+				libopenmpt._free(rightBufferPtr);
 			}
 		};
 
@@ -102,9 +102,9 @@
 			var ended = false;
 			while (framesToRender > 0) {
 				var framesPerChunk = Math.min(framesToRender, maxFramesPerChunk);
-				var actualFramesPerChunk = LibOpenMPT._openmpt_module_read_float_stereo(modulePtr, audioCtx.sampleRate, framesPerChunk, leftBufferPtr, rightBufferPtr);
-				var rawAudioLeft = LibOpenMPT.HEAPF32.subarray(leftBufferPtr / 4, leftBufferPtr / 4 + actualFramesPerChunk);
-				var rawAudioRight = LibOpenMPT.HEAPF32.subarray(rightBufferPtr / 4, rightBufferPtr / 4 + actualFramesPerChunk);
+				var actualFramesPerChunk = libopenmpt._openmpt_module_read_float_stereo(modulePtr, audioCtx.sampleRate, framesPerChunk, leftBufferPtr, rightBufferPtr);
+				var rawAudioLeft = libopenmpt.HEAPF32.subarray(leftBufferPtr / 4, leftBufferPtr / 4 + actualFramesPerChunk);
+				var rawAudioRight = libopenmpt.HEAPF32.subarray(rightBufferPtr / 4, rightBufferPtr / 4 + actualFramesPerChunk);
 				for (var i = 0; i < actualFramesPerChunk; ++i) {
 					outputL[framesRendered + i] = rawAudioLeft[i];
 					outputR[framesRendered + i] = rawAudioRight[i];
@@ -121,7 +121,7 @@
 		this.seekable = true;
 
 		this.seek = function(position) {
-			LibOpenMPT._openmpt_module_set_position_seconds(modulePtr, position);
+			libopenmpt._openmpt_module_set_position_seconds(modulePtr, position);
 		};
 
 		this.reset = function() {

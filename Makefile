@@ -1,4 +1,4 @@
-LIBOPENMPT_BUILD_VERSION = 7785
+LIBOPENMPT_BUILD_VERSION = 8653
 
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
@@ -105,10 +105,7 @@ libopenmpt:
 	mkdir -p build
 	cd build && \
 	svn checkout -r $(LIBOPENMPT_BUILD_VERSION) https://source.openmpt.org/svn/openmpt/trunk/OpenMPT/ openmpt-trunk && \
-	wget -O minimp3.tar.gz http://keyj.emphy.de/files/projects/minimp3.tar.gz && \
-	rm -f openmpt-trunk/include/minimp3/* && \
-	tar xzf minimp3.tar.gz -C openmpt-trunk/include/ && \
 	cd openmpt-trunk/ && \
 	make clean && \
-	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 LDFLAGS="-s EXPORT_NAME=\"'LibOpenMPT'\"" && \
+	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 && \
 	cp bin/libopenmpt.js bin/libopenmpt.js.mem ../../cowbell/openmpt/
