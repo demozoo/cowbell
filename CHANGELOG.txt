@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4 (xxxx-xx-xx)
+0.4 (2017-08-11)
 ~~~~~~~~~~~~~~~~
 
  * Added .sid file format support, via jsSID by Mihaly Horvath (Hermit)
