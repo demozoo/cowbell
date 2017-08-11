@@ -11,7 +11,9 @@ DIST_FILES=\
 	dist/cowbell/openmpt.min.js \
 	dist/doc/api.md \
 	dist/doc/usage.md \
-	dist/doc/LICENSE
+	dist/doc/LICENSE \
+	dist/doc/README.md \
+	dist/doc/CHANGELOG.txt
 
 .PHONY: all
 all: $(DIST_FILES)
@@ -75,6 +77,14 @@ dist/doc/usage.md: doc/usage.md
 dist/doc/LICENSE: LICENSE
 	mkdir -p dist/doc/
 	cp LICENSE dist/doc/LICENSE
+
+dist/doc/README.md: README.md
+	mkdir -p dist/doc/
+	cp README.md dist/doc/README.md
+
+dist/doc/CHANGELOG.txt: CHANGELOG.txt
+	mkdir -p dist/doc/
+	cp CHANGELOG.txt dist/doc/CHANGELOG.txt
 
 build/z80.js: cowbell/zx_spectrum/z80.coffee
 	mkdir -p build
