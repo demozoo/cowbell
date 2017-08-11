@@ -1,4 +1,4 @@
-LIBOPENMPT_BUILD_VERSION = 8653
+LIBOPENMPT_BUILD_VERSION = 8745
 
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
