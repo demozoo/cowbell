@@ -17,6 +17,7 @@
 		<script src="cowbell/vtx.min.js"></script>
 		<script src="cowbell/zx.min.js"></script>
 		<script src="cowbell/openmpt.min.js"></script>
+		<script src="cowbell/jssid.min.js"></script>
 
 		<script>
 			function go() {
@@ -29,6 +30,7 @@
 				var modPlayer = new Cowbell.Player.OpenMPT({
 					'pathToLibOpenMPT': 'cowbell/libopenmpt.js'
 				});
+				var sidPlayer = new Cowbell.Player.JSSID();
 
 				var tracks = [
 					[
@@ -66,6 +68,10 @@
 					[
 						"Through Poland - Factor6 (SQT)",
 						new sqtPlayer.Track('music/through_poland.sqt')
+					],
+					[
+						"Cybernoid - Jeroen Tel (SID)",
+						new sidPlayer.Track('music/cybernoid.sid')
 					]
 				]
 
@@ -99,7 +105,7 @@
 				<p>a universal web audio player for demoscene music</p>
 				<p class="view"><a href="http://github.com/demozoo/cowbell">View the Project on GitHub <small>demozoo/cowbell</small></a></p>
 				<ul>
-					<li><a href="downloads/cowbell-0.3.zip">Download <strong>0.3</strong></a></li>
+					<li><a href="downloads/cowbell-0.4.zip">Download <strong>0.4</strong></a></li>
 					<li><a href="https://github.com/demozoo/cowbell/blob/master/doc/usage.md">Usage <strong>Docs</strong></a></li>
 					<li><a href="http://github.com/demozoo/cowbell">Fork On <strong>GitHub</strong></a></li>
 				</ul>
