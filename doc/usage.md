@@ -98,13 +98,23 @@ For greater control over the way the player is put together - particularly if yo
 Available backends
 ------------------
 
-### Cowbell.Player.Audio
+## Cowbell.Player.ASAP
+
+*Imports needed:* `asap.min.js`
+
+[ASAP](http://asap.sourceforge.net/) player for the .SAP file format and other Atari 8-bit formats: CMC, CM3, CMR, CMS, DMC, DLT, FC, MPT, MPD, RMT, TMC, TM8, TM2
+
+*Options:* None
+
+
+## Cowbell.Player.Audio
 
 *Imports needed:* `cowbell.min.js`
 
 This provides support for the file types that your browser can play natively through the `<audio>` tag. On most browsers this includes MP3 and OGG, and possibly things like FLAC and WAV too.
 
 *Options:* None
+
 
 ## Cowbell.Player.JSSID
 
@@ -120,7 +130,8 @@ This provides support for the file types that your browser can play natively thr
 
 * `duration`: Duration of track in seconds. If not specified (or null), plays forever
 
-### Cowbell.Player.OpenMPT
+
+## Cowbell.Player.OpenMPT
 
 *Imports needed:* `cowbell.min.js`, `openmpt.min.js`
 
@@ -135,7 +146,8 @@ This backend additionally depends on the `libopenmpt.js` library (and the accomp
 
 * `pathToLibOpenMPT` - the URL to libopenmpt.js
 
-### Cowbell.Player.PSG
+
+## Cowbell.Player.PSG
 
 *Imports needed:* `cowbell.min.js`, `ay_chip.min.js`
 
@@ -143,13 +155,15 @@ Player for the .PSG format, an uncompressed stream of AY / YM sound chip command
 
 *Options:* None
 
-### Cowbell.Player.VTX
+
+## Cowbell.Player.VTX
 
 *Imports needed:* `cowbell.min.js`, `ay_chip.min.js`, `vtx.min.js`
 
 Player for the .VTX format, an LH5-compressed stream of AY / YM sound chip command data.
 
 *Options:* None
+
 
 ## Cowbell.Player.ZXSTC
 

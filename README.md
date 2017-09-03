@@ -12,7 +12,7 @@ Features
 
 ### Support for lots of file formats
 
-MP3, OGG (and whatever else your browser supports natively), MOD, XM, S3M, IT (and all other formats implemented by libopenmpt), SID, PSG, VTX, STC and PT3 formats
+MP3, OGG (and whatever else your browser supports natively), MOD, XM, S3M, IT (and all other formats implemented by libopenmpt), SID, SAP (and other Atari 8-bit formats implemented by ASAP), PSG, VTX, STC, SQT and PT3 formats
 
 ### Highly accurate playback engines
 
@@ -60,13 +60,16 @@ Authors
 
 Framework code and AY / Z80 emulation by Matt Westcott; Z80 implementation based on the [Fuse](http://fuse-emulator.sourceforge.net/) ZX Spectrum emulator by Philip Kendall, Fredrick Meunier and others.
 
-[Libopenmpt](http://lib.openmpt.org/libopenmpt/) by Jörn Heusipp, Johannes Schultz and others; Javascript / Emscripten build taken from [chiptune2.js](https://github.com/deskjet/chiptune2.js) by Simon Gündling.
+[Libopenmpt](http://lib.openmpt.org/libopenmpt/) by Jörn Heusipp, Johannes Schultz and others.
 
 [Original LH4 decompression code](https://github.com/erlandranvinge/lh4.js/tree/master) (for VTX file format) by Erland Ranvinge, based on a mix of Nobuyasu Suehiro's Java implementation and Simon Howard's C version.
 
 ZX Spectrum Protracker 3 playback routine (Z80 code) by Sergey Bulba and Ivan Roshin, from the [Vortex Tracker 2](http://bulba.untergrund.net/main_e.htm) project.
 
 jsSID .sid player by [Mihaly Horvath (Hermit)](http://hermit.sidrip.com).
+
+.sap / Atari 8-bit format support from [ASAP (Another Slight Atari Player)](http://asap.sourceforge.net/) by Piotr Fusik (Fox) and others.
+
 
 Contact
 -------
