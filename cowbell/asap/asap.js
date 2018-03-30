@@ -3,6 +3,7 @@
 function ASAP()
 {
 	this.blocksPlayed = 0;
+	this._seekTimeout = undefined;
 	this.consol = 0;
 	this.covox = new Array(4);
 	this.cpu = new Cpu6502();
@@ -147,8 +148,8 @@ ASAP.prototype.generate = function(buffer, bufferLen, format) {
 }
 
 ASAP.prototype.generateAt = function(buffer, bufferOffset, bufferLen, format) {
-	if (this.silenceCycles > 0 && this.silenceCyclesCounter <= 0)
-		return 0;
+	if (this._seekTimeout !== undefined) return 0; // stop playback until seeking is done
+	if (this.silenceCycles > 0 && this.silenceCyclesCounter <= 0) return 0;
 	var blockShift = this.moduleInfo.channels - 1 + (format != ASAPSampleFormat.U8 ? 1 : 0);
 	var bufferBlocks = bufferLen >> blockShift;
 	if (this.currentDuration > 0) {
@@ -543,18 +544,47 @@ ASAP.putWavMetadata = function(buffer, offset, fourCC, value) {
 ASAP.SAMPLE_RATE = 44100;
 
 ASAP.prototype.seek = function(position) {
-	this.seekSample(ASAP.millisecondsToBlocks(position));
+	this.seekSample( ASAP.millisecondsToBlocks( position ) );
 }
 
-ASAP.prototype.seekSample = function(block) {
-	if (block < this.blocksPlayed)
-		this.playSong(this.currentSong, this.currentDuration);
-	while (this.blocksPlayed + this.pokeys.readySamplesEnd < block) {
-		this.blocksPlayed += this.pokeys.readySamplesEnd;
-		this.doFrame();
+ASAP.prototype.seekSample = function( block ) {
+	var self = this
+
+	// cancel previous seeking algorithm
+	if ( self._seekTimeout !== undefined ) clearTimeout( self._seekTimeout )
+
+	if ( block < self.blocksPlayed ) {
+		self.playSong( self.currentSong, self.currentDuration );
 	}
-	this.pokeys.readySamplesStart = block - this.blocksPlayed;
-	this.blocksPlayed = block;
+
+	function tick () {
+		var counter = 0;
+		var limit = Math.max( self.pokeys.readySamplesEnd, 200 );
+
+		while ( self.blocksPlayed + self.pokeys.readySamplesEnd < block ) {
+			self.blocksPlayed += self.pokeys.readySamplesEnd;
+			self.doFrame();
+
+			counter += 1;
+			if ( counter > limit ) break; // don't block main UI thread for too long
+		}
+
+		if ( self.blocksPlayed + self.pokeys.readySamplesEnd < block ) {
+			// give main UI thread some time before continuing
+			self._seekTimeout = setTimeout( tick, 1 )
+		} else {
+			// done
+			self.pokeys.readySamplesStart = block - self.blocksPlayed;
+			self.blocksPlayed = block;
+
+			// remember to reset self._seekTimeout
+			// ASAP.prototype.generateAt stops until _seekTimeout is undefined
+			self._seekTimeout = undefined;
+		}
+	}
+
+	// start seeking
+	self._seekTimeout = setTimeout( tick, 1 )
 }
 
 function ASAP6502()

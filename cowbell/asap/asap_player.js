@@ -31,9 +31,10 @@
 			} else {
 				self.duration = self.reportedDuration / 1000;
 			}
+
 			self.seekable = true;
-			self.seek = function (position) {
-				this.asap.seek(position * 1000); // convert to milliseconds
+			self.seek = function(position) {
+				this.asap.seek( position * 1000 ) // convert to milliseconds
 			};
 
 			onReady();
