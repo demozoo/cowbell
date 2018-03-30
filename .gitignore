@@ -1,2 +1,8 @@
 /build
 /dist
+
+# vim temp files
+*.swp
+
+# mac files
+*.DS_Store
