@@ -31,7 +31,10 @@
 			} else {
 				self.duration = self.reportedDuration / 1000;
 			}
-			self.seekable = false;
+			self.seekable = true;
+			self.seek = function (position) {
+				this.asap.seek(position * 1000); // convert to milliseconds
+			};
 
 			onReady();
 		});
@@ -43,6 +46,7 @@
 	};
 	ASAPGenerator.prototype.reset = function() {
 		this.asap.playSong(this.song, this.reportedDuration);
+		this.seek(0)
 	};
 	ASAPGenerator.prototype.generateAudio = function (outputBuffer) {
 		var requiredBufferLength = outputBuffer.length * this.channelCount;
