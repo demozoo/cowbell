@@ -18,6 +18,7 @@
 		<script src="cowbell/zx.min.js"></script>
 		<script src="cowbell/openmpt.min.js"></script>
 		<script src="cowbell/jssid.min.js"></script>
+		<script src="cowbell/asap.min.js"></script>
 
 		<script>
 			function go() {
@@ -31,6 +32,7 @@
 					'pathToLibOpenMPT': 'cowbell/libopenmpt.js'
 				});
 				var sidPlayer = new Cowbell.Player.JSSID();
+				var asapPlayer = new Cowbell.Player.ASAP();
 
 				var tracks = [
 					[
@@ -72,6 +74,10 @@
 					[
 						"Cybernoid - Jeroen Tel (SID)",
 						new sidPlayer.Track('music/cybernoid.sid')
+					],
+					[
+						"Grayscale Project - Drill Dance (SAP)",
+						new asapPlayer.Track('music/drilldance.sap')
 					]
 				]
 
