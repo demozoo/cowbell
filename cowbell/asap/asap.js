@@ -327,7 +327,21 @@ ASAP.prototype.load = function(filename, module, moduleLen) {
 }
 
 ASAP.millisecondsToBlocks = function(milliseconds) {
-	return Math.floor(milliseconds * ( ASAP.SAMPLE_RATE / 100 ) / 10);
+	var blocks = (
+	  Math.floor(
+	    milliseconds * ( ASAP.SAMPLE_RATE / 100 ) / 10
+	  )
+  )
+	return blocks
+}
+
+ASAP.blocksToMilliseconds = function( blocks ) {
+  var milliseconds = (
+    Math.floor(
+      ( blocks / ASAP.SAMPLE_RATE ) * 1000
+    )
+  )
+	return milliseconds
 }
 
 ASAP.prototype.mutePokeyChannels = function(mask) {
