@@ -90,12 +90,17 @@ with audio data, and seeking to a specified time.
 				}
 
 				function generateAudio(event) {
+					var generatedLength = generator.generateAudio(event.outputBuffer);
+
+					// don't progress without any data
+					if ( generatedLength < 0 ) {
+						return;
+					}
+
 					if (!hasStartedProcessing) {
 						playStartTimestamp = event.playbackTime;
 						hasStartedProcessing = true;
 					}
-
-					var generatedLength = generator.generateAudio(event.outputBuffer);
 
 					if (generatedLength < event.outputBuffer.length) {
 						/* generate silence for the remainder of the buffer */
@@ -177,3 +182,4 @@ with audio data, and seeking to a specified time.
 		};
 	};
 })();
+
