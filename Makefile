@@ -67,10 +67,10 @@ dist/cowbell/jssid.min.js: cowbell/jssid.js
 		--js=cowbell/jssid.js \
 		--js_output_file=dist/cowbell/jssid.min.js
 
-dist/cowbell/asap.min.js: cowbell/asap/asap.js cowbell/asap/asap_player.js
+dist/cowbell/asap.min.js: cowbell/asap/resampler.js cowbell/asap/XAudioServer.js cowbell/asap/asap.js cowbell/asap/asap_player.js
 	mkdir -p dist/cowbell/
 	closure-compiler \
-		--js=cowbell/asap/asap.js --js=cowbell/asap/asap_player.js \
+		--js=cowbell/asap/resampler.js --js=cowbell/asap/XAudioServer.js --js=cowbell/asap/asap.js --js=cowbell/asap/asap_player.js \
 		--js_output_file=dist/cowbell/asap.min.js
 
 dist/doc/api.md: doc/api.md
