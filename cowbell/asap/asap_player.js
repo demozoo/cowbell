@@ -1,8 +1,12 @@
 (function() {
 	function ASAPGenerator(url, audioCtx, playerOpts, trackOpts) {
 		this.asap = new ASAP();
+		this.rateCoefficient = 1;
 		if (audioCtx.sampleRate != ASAP.SAMPLE_RATE) {
-			console.log("Warning: sample rate mismatch (needed " + ASAP.SAMPLE_RATE + ", got " + audioCtx.sampleRate + ")");
+			this.rateCoefficient = ( ASAP.SAMPLE_RATE / audioCtx.sampleRate );
+			if ( !ASAP.nowarn && console && console.log ) {
+				console.log("Warning: sample rate mismatch (needed " + ASAP.SAMPLE_RATE + ", got " + audioCtx.sampleRate + ")");
+			}
 		}
 		this.url = url;
 		this.buffer = new Uint8Array(65536);
@@ -28,13 +32,29 @@
 			self.reportedDuration = info.getDuration(self.song);
 			if (self.reportedDuration == -1) {
 				self.duration = 60;
+				if ( !ASAP.nowarn && console && console.log ) {
+					console.log("Warning: no duration information found, defaulting to 60 seconds.");
+				}
 			} else {
 				self.duration = self.reportedDuration / 1000;
+
+				if ( self.rateCoefficient ) {
+					if ( !ASAP.nolog && console && console.log ) {
+						if ( self.rateCoefficient !== 1 ) {
+						  console.log( 'rate coefficient: ' + self.rateCoefficient );
+            }
+					}
+					self.duration = self.rateCoefficient * self.duration;
+				}
 			}
 
 			self.seekable = true;
 			self.seek = function(position) {
-				this.asap.seek( position * 1000 ) // convert to milliseconds
+				// convert to milliseconds
+				var milliseconds = position * 1000;
+
+				// compensate for possible sample rate mixups
+				self.asap.seek( milliseconds * self.rateCoefficient );
 			};
 
 			onReady();
@@ -55,6 +75,9 @@
 			this.buffer = new Uint8Array(requiredBufferLength);
 		}
 		var generatedLength = this.asap.generate(this.buffer, requiredBufferLength, ASAPSampleFormat.U8);
+
+		if ( generatedLength === ASAP.WAITING_ON_SEEK ) return ASAP.WAITING_ON_SEEK;
+
 		var sampleIndex;
 		for (var c = 0; c < this.channelCount; c++) {
 			var channelBuffer = outputBuffer.getChannelData(c);
