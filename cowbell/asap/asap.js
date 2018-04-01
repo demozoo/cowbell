@@ -26,8 +26,6 @@ function ASAP()
 }
 
 ASAP.SAMPLE_RATE = 44100;
-ASAP.SAMPLE_RATE = 48000;
-ASAP.WAITING_ON_SEEK = -100;
 
 ASAP.prototype.call6502 = function(addr) {
 	this.memory[53760] = 32;
@@ -2306,7 +2304,7 @@ ASAPInfo.prototype.getDefaultSong = function() {
 }
 
 ASAPInfo.prototype.getDuration = function(song) {
-	return this.durations[song] * ( 441 / 480 );
+	return this.durations[song];
 }
 
 ASAPInfo.getExtDescription = function(ext) {
