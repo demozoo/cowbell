@@ -24,6 +24,10 @@ function ASAP()
 	this.silenceCycles = 0;
 }
 
+ASAP.SAMPLE_RATE = 44100;
+ASAP.SAMPLE_RATE = 48000;
+ASAP.WAITING_ON_SEEK = -100;
+
 ASAP.prototype.call6502 = function(addr) {
 	this.memory[53760] = 32;
 	this.memory[53761] = addr & 0xff;
@@ -148,7 +152,7 @@ ASAP.prototype.generate = function(buffer, bufferLen, format) {
 }
 
 ASAP.prototype.generateAt = function(buffer, bufferOffset, bufferLen, format) {
-	if (this._seekTimeout !== undefined) return 0; // stop playback until seeking is done
+	if (this._seekTimeout !== undefined) return ASAP.WAITING_ON_SEEK;
 	if (this.silenceCycles > 0 && this.silenceCyclesCounter <= 0) return 0;
 	var blockShift = this.moduleInfo.channels - 1 + (format != ASAPSampleFormat.U8 ? 1 : 0);
 	var bufferBlocks = bufferLen >> blockShift;
@@ -210,13 +214,13 @@ ASAP.prototype.getPokeyChannelVolume = function(channel) {
 }
 
 ASAP.prototype.getPosition = function() {
-	return Math.floor(this.blocksPlayed * 10 / 441);
+	return Math.floor(this.blocksPlayed * 10 / ( ASAP.SAMPLE_RATE / 100 ) );
 }
 
 ASAP.prototype.getWavHeader = function(buffer, format, metadata) {
 	var use16bit = format != ASAPSampleFormat.U8 ? 1 : 0;
 	var blockSize = this.moduleInfo.channels << use16bit;
-	var bytesPerSecond = 44100 * blockSize;
+	var bytesPerSecond = ASAP.SAMPLE_RATE * blockSize;
 	var totalBlocks = ASAP.millisecondsToBlocks(this.currentDuration);
 	var nBytes = (totalBlocks - this.blocksPlayed) * blockSize;
 	ASAP.putLittleEndian(buffer, 8, 1163280727);
@@ -225,7 +229,7 @@ ASAP.prototype.getWavHeader = function(buffer, format, metadata) {
 	buffer[21] = 0;
 	buffer[22] = this.moduleInfo.channels;
 	buffer[23] = 0;
-	ASAP.putLittleEndians(buffer, 24, 44100, bytesPerSecond);
+	ASAP.putLittleEndians(buffer, 24, ASAP.SAMPLE_RATE, bytesPerSecond);
 	buffer[32] = blockSize;
 	buffer[33] = 0;
 	buffer[34] = 8 << use16bit;
@@ -325,7 +329,7 @@ ASAP.prototype.load = function(filename, module, moduleLen) {
 }
 
 ASAP.millisecondsToBlocks = function(milliseconds) {
-	return Math.floor(milliseconds * 441 / 10);
+	return Math.floor(milliseconds * ( ASAP.SAMPLE_RATE / 100 ) / 10);
 }
 
 ASAP.prototype.mutePokeyChannels = function(mask) {
@@ -541,21 +545,22 @@ ASAP.putWavMetadata = function(buffer, offset, fourCC, value) {
 	}
 	return offset;
 }
-ASAP.SAMPLE_RATE = 44100;
 
-ASAP.prototype.seek = function(position) {
+ASAP.prototype.seek = function( position ) {
 	this.seekSample( ASAP.millisecondsToBlocks( position ) );
 }
 
 ASAP.prototype.seekSample = function( block ) {
 	var self = this
 
-	// cancel previous seeking algorithm
+	// cancel previous seeking position
 	if ( self._seekTimeout !== undefined ) clearTimeout( self._seekTimeout )
 
 	if ( block < self.blocksPlayed ) {
 		self.playSong( self.currentSong, self.currentDuration );
 	}
+
+	var startTime = Date.now();
 
 	function tick () {
 		var counter = 0;
@@ -576,6 +581,9 @@ ASAP.prototype.seekSample = function( block ) {
 			// done
 			self.pokeys.readySamplesStart = block - self.blocksPlayed;
 			self.blocksPlayed = block;
+
+			var now = Date.now();
+			var delta = ( now - startTime );
 
 			// remember to reset self._seekTimeout
 			// ASAP.prototype.generateAt stops until _seekTimeout is undefined
@@ -2291,7 +2299,7 @@ ASAPInfo.prototype.getDefaultSong = function() {
 }
 
 ASAPInfo.prototype.getDuration = function(song) {
-	return this.durations[song];
+	return this.durations[song] * ( 441 / 480 );
 }
 
 ASAPInfo.getExtDescription = function(ext) {
