@@ -1,8 +1,10 @@
 /* Player for the .PSG format (an uncompressed stream of AY chip commands) */
 
 (function() {
-	function PSGGenerator(url, audioCtx) {
-		return new Cowbell.Common.AYGenerator(url, audioCtx, function(psg, onReady) {
+	function PSGGenerator(url, audioCtx, playerOpts, trackOpts) {
+		if (!playerOpts) playerOpts = {};
+		if (!trackOpts) trackOpts = {};
+ 		return new Cowbell.Common.AYGenerator(url, audioCtx, function(psg, onReady) {
 			var signature = String.fromCharCode.apply(null, psg.subarray(0,4));
 			if (signature !== "PSG\x1a") {
 				throw "Not a PSG file";
@@ -20,7 +22,8 @@
 					var command = psg[index];
 					index++;
 					if (command == 0xfd) {
-						return registerLog;
+						index=psg.length;
+						break;
 					} else if (command == 0xff) {
 						frameCount = 1;
 						break;
@@ -45,12 +48,14 @@
 			}
 
 			onReady({
-				'ayRegisterLog': registerLog
+				'ayRegisterLog': registerLog,
+				'ayFrequency': trackOpts.ayFrequency || playerOpts.ayFrequency,
+				'ayEnvDepth': trackOpts.ayEnvDepth || playerOpts.ayEnvDepth
 			});
 		});
 	}
 
-	Cowbell.Player.PSG = function() {
-		return new Cowbell.Common.WebAudioPlayer(PSGGenerator);
+	Cowbell.Player.PSG = function(opts) {
+		return new Cowbell.Common.WebAudioPlayer(PSGGenerator,opts);
 	};
 })();

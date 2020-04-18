@@ -20,6 +20,7 @@
 
 		var frequency = opts.frequency;
 		var sampleRate = opts.sampleRate;
+		var envDepth = opts.envDepth;
 
 		var cyclesPerSample = frequency / sampleRate;
 
@@ -111,10 +112,11 @@
 				case 12:
 					envelopePeriod = ((registers[12] << 8) | registers[11]) * 16;
 					if (envelopePeriod === 0) envelopePeriod = 16;
+					envelopePeriod *= (16 / (envDepth + 1));  //make envelope run twice as fast if depth=31
 					break;
 				case 13:
 					envelopeCounter = 0;
-					envelopeRampCounter = 16;
+					envelopeRampCounter = envDepth+1;
 					envelopeOnFirstRamp = true;
 					envelopeAlternatePhase = 0x00;
 					envelopeHoldMask = (val & 0x01) ? 0x0f : 0x00;
@@ -169,14 +171,14 @@
 
 					envelopeRampCounter--;
 					if (envelopeRampCounter < 0) {
-						envelopeRampCounter = 15;
+						envelopeRampCounter = envDepth;
 						envelopeOnFirstRamp = false;
 						envelopeAlternatePhase ^= 0x0f;
 					}
 
 					envelopeValue = (
 						/* start with the descending ramp counter */
-						envelopeRampCounter
+						envelopeRampCounter * (16 / (envDepth + 1)) //normalize to 16
 						/* XOR with the 'alternating' bit if on an even-numbered ramp */
 						^ (envelopeAlternatePhase && envelopeAlternateMask)
 					);
@@ -201,7 +203,7 @@
 				var levelC = VOLUME_LEVELS[
 					((registers[10] & 0x10) ? envelopeValue : (registers[10] & 0x0f))
 					& (toneGeneratorCPhase | toneChanCMask)
-					& (noiseGeneratorPhase | noiseChanCMask)
+					& (noiseGeneratorPhase | noiseChanCMask) 
 				];
 
 				leftChannelData[bufferPos] = (
@@ -216,6 +218,7 @@
 
 	Cowbell.Common.AYGenerator = function(url, audioCtx, decodeFileData) {
 		var AY_FREQUENCY = 1773400;
+		var AY_ENVDEPTH = 15;
 		var commandFrameDuration;
 		var framesPerCommandFrame;
 
@@ -300,7 +303,8 @@
 						'frequency': decodedData['ayFrequency'] || AY_FREQUENCY,
 						'panning': decodedData['panning'],
 						'stereoMode': decodedData['stereoMode'],
-						'sampleRate': audioCtx.sampleRate
+						'sampleRate': audioCtx.sampleRate,
+						'envDepth': decodedData['ayEnvDepth'] || AY_ENVDEPTH
 					});
 
 					commandFrameDuration = 1 / (decodedData['commandFrequency'] || 50);
