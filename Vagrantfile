@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/zesty64"
+  config.vm.box = "ubuntu/bionic64"
 
   config.vm.provision :shell, :path => "install.sh"
 
@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "basic", primary: true do |basic|
     basic.vm.provider "virtualbox" do |vb|
       # Customize the amount of memory on the VM:
-      vb.memory = "512"
+      vb.memory = "1024"
     end
   end
 
