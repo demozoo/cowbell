@@ -13,7 +13,8 @@
 		<script>
 			function go() {
 				var audioPlayer = new Cowbell.Player.Audio();
-				var psgPlayer = new Cowbell.Player.PSG();
+				var psgZXPlayer = new Cowbell.Player.PSG();
+				var psgSTPlayer = new Cowbell.Player.PSG({ayFrequency: 2000000, ayEnvDepth: 31});
 				var stcPlayer = new Cowbell.Player.ZXSTC({stereoMode: 'acb'});
 				var pt3Player = new Cowbell.Player.ZXPT3({stereoMode: 'acb'});
 				var sqtPlayer = new Cowbell.Player.ZXSQT({stereoMode: 'acb'});
@@ -31,7 +32,11 @@
 					],
 					[
 						"Dancing Queen - Gasman (PSG)",
-						new psgPlayer.Track('music/dancing_queen.psg')
+						new psgZXPlayer.Track('music/dancing_queen.psg')
+					],
+					[
+						"Enchanted Lands - Jochen Hippel (PSY)",
+						new psgSTPlayer.Track('music/enchanted.psy')
 					],
 					[
 						"Worlds Apart - Gasman (STC)",
