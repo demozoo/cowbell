@@ -153,7 +153,11 @@ This backend additionally depends on the `libopenmpt.js` library (and the accomp
 
 Player for the .PSG format, an uncompressed stream of AY / YM sound chip command data.
 
-*Options:* None
+*Options: (can be specified as either player or track opts)*
+
+* `ayFrequency`: Clock frequency (in Hz) of the AY chip. Default: 1773400
+* `ayMode`: 'AY' or 'YM', to indicate the chip type to emulate. Default: 'AY'
+
 
 
 ## Cowbell.Player.VTX
