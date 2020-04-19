@@ -8,6 +8,8 @@
 				throw "Not a VTX file";
 			}
 
+			var ayMode = signature.toUpperCase();
+
 			var STEREO_MODES = {
 				1: 'abc', 2: 'acb', 3: 'bac',
 				4: 'bca', 5: 'cab', 6: 'cba'
@@ -83,7 +85,8 @@
 					'ayRegisterLog': registerLog,
 					'ayFrequency': ayFrequency,
 					'commandFrequency': commandFrequency,
-					'stereoMode': stereoMode
+					'stereoMode': stereoMode,
+					'ayMode': ayMode
 				});
 
 			});
