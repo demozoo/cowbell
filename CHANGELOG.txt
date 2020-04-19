@@ -5,6 +5,8 @@ Changelog
 ~~~~~~~~~~~~~~~~
 
  * Added ASAP player by Piotr Fusik (Fox) to support .sap and other Atari 8-bit formats
+ * Added support for emulating the YM chip in place of the AY (tIn)
+ * Updated libopenmpt to current SVN build (0.5, r12686) and rebuilt with WebAssembly support
 
 
 0.4 (2017-08-11)
