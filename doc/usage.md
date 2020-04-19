@@ -157,7 +157,9 @@ Player for the .PSG format, an uncompressed stream of AY / YM sound chip command
 
 * `ayFrequency`: Clock frequency (in Hz) of the AY chip. Default: 1773400
 * `ayMode`: 'AY' or 'YM', to indicate the chip type to emulate. Default: 'AY'
-
+* `commandFrequency`: Frequency (in Hz) at which command data will be pushed to the AY chip. Default: 50
+* `stereoMode`: A string indicating the stereo arrangement of the AY channels; for example, `'ACB'` denotes channel A on the left, B on the right, and C in the centre. Supported values are `'ABC'`, `'ACB'`, `'BAC'`, `'BCA'`, `'CAB'` and `'CBA'`; any other value denotes mono output. Default: mono
+* `panning`: A three-element array indicating the exact stereo positioning of the AY channels, where 0.0 = hard left and 1.0 = hard right. For example, `[0.0, 1.0, 0.5]` denotes ACB stereo with full separation. If both `panning` and `stereoMode` are specified, `panning` takes precedence.
 
 
 ## Cowbell.Player.VTX
