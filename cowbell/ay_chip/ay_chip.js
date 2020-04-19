@@ -65,7 +65,7 @@
 
 		var envelopePeriod = 256;
 		var envelopeCounter = 0;
-		var envelopeRampCounter = 16;
+		var envelopeRampCounter = 31;
 		var envelopeOnFirstRamp = true;
 		var envelopeAlternateMask = 0x00;
 		var envelopeAlternatePhase = 0x00;
