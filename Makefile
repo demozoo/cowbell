@@ -8,7 +8,7 @@ DIST_FILES=\
 	dist/cowbell/jssid.min.js \
 	dist/cowbell/asap.min.js \
 	dist/cowbell/libopenmpt.js \
-	dist/cowbell/libopenmpt.js.mem \
+	dist/cowbell/libopenmpt.wasm \
 	dist/cowbell/openmpt.min.js \
 	dist/doc/api.md \
 	dist/doc/usage.md \
@@ -51,9 +51,9 @@ dist/cowbell/libopenmpt.js: cowbell/openmpt/libopenmpt.js
 	mkdir -p dist/cowbell/
 	cp cowbell/openmpt/libopenmpt.js dist/cowbell/libopenmpt.js
 
-dist/cowbell/libopenmpt.js.mem: cowbell/openmpt/libopenmpt.js.mem
+dist/cowbell/libopenmpt.wasm: cowbell/openmpt/libopenmpt.wasm
 	mkdir -p dist/cowbell/
-	cp cowbell/openmpt/libopenmpt.js.mem dist/cowbell/libopenmpt.js.mem
+	cp cowbell/openmpt/libopenmpt.wasm dist/cowbell/libopenmpt.wasm
 
 dist/cowbell/openmpt.min.js: cowbell/openmpt/openmpt_player.js
 	mkdir -p dist/cowbell/
@@ -125,4 +125,4 @@ libopenmpt:
 	cd openmpt-trunk/ && \
 	make clean && \
 	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 && \
-	cp bin/libopenmpt.js bin/libopenmpt.js.mem ../../cowbell/openmpt/
+	cp bin/libopenmpt.js bin/libopenmpt.wasm ../../cowbell/openmpt/

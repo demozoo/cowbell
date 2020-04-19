@@ -140,7 +140,7 @@ A JavaScript port of the [libopenmpt](http://lib.openmpt.org/libopenmpt/) librar
 mod s3m xm it mptm stm nst m15 stk wow ult 669 mtm med far mdl ams dsm amf okt dmf ptm psm mt2 dbm digi imf j2b gdm umx plm mo3 xpk ppm mmcmp
 
 
-This backend additionally depends on the `libopenmpt.js` library (and the accompanying resource file `libopenmpt.js.mem`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, since it's over 2Mb in size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibOpenMPT` option.
+This backend additionally depends on the `libopenmpt.js` library (and the accompanying resource file `libopenmpt.wasm`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, since it's over 2Mb in size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibOpenMPT` option.
 
 *Options:*
 
