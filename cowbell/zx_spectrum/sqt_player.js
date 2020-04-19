@@ -82,7 +82,8 @@ running the original Z80 player routine under emulation */
 				'ayFrequency': trackOpts.ayFrequency || playerOpts.ayFrequency,
 				'commandFrequency': trackOpts.commandFrequency || playerOpts.commandFrequency,
 				'stereoMode': trackOpts.stereoMode || playerOpts.stereoMode,
-				'panning': trackOpts.panning || playerOpts.panning
+				'panning': trackOpts.panning || playerOpts.panning,
+				'ayMode': trackOpts.ayMode || playerOpts.ayMode
 			});
 		});
 	}
