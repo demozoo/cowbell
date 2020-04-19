@@ -2,11 +2,22 @@
 
 (function() {
 	Cowbell.Common.AYChip = function(opts) {
-		var VOLUME_LEVELS = [
-			0.000000, 0.004583, 0.006821, 0.009684,
-			0.014114, 0.020614, 0.028239, 0.045633,
-			0.056376, 0.088220, 0.117568, 0.149977,
-			0.190123, 0.229088, 0.282717, 0.333324
+		/* from sc68 by Benjamin Gerard / https://github.com/hatari/hatari/blob/master/src/sound.c
+		/* Table of unsigned 5 bit D/A output level for 1 channel as measured on a real ST (expanded from 4 bits to 5 bits) */
+		/* Vol 0 should be 310 when measuread as a voltage, but we set it to 0 in order to have a volume=0 matching */
+		/* the 0 level of a 16 bits unsigned sample (no sound output) */
+		var VOLUME_LEVELS_YM = [
+			  0/0x2fffd /*310*/,  369/0x2fffd,  438/0x2fffd,  521/0x2fffd,  619/0x2fffd,  735/0x2fffd,  874/0x2fffd, 1039/0x2fffd,
+			 1234/0x2fffd, 1467/0x2fffd, 1744/0x2fffd, 2072/0x2fffd, 2463/0x2fffd, 2927/0x2fffd, 3479/0x2fffd, 4135/0x2fffd,
+			 4914/0x2fffd, 5841/0x2fffd, 6942/0x2fffd, 8250/0x2fffd, 9806/0x2fffd,11654/0x2fffd,13851/0x2fffd,16462/0x2fffd,
+			19565/0x2fffd,23253/0x2fffd,27636/0x2fffd,32845/0x2fffd,39037/0x2fffd,46395/0x2fffd,55141/0x2fffd,65535/0x2fffd
+		];
+		/* the AY volume table has double entries to halve the envelope speed, see cyclesPerSampleEnv below */
+		var VOLUME_LEVELS_AY = [
+			0.000000, 0.000000, 0.004583, 0.004583, 0.006821, 0.006821, 0.009684, 0.009684,
+			0.014114, 0.014114, 0.020614, 0.020614, 0.028239, 0.028239, 0.045633, 0.045633,
+			0.056376, 0.056376, 0.088220, 0.088220, 0.117568, 0.117568, 0.149977, 0.149977,
+			0.190123, 0.190123, 0.229088, 0.229088, 0.282717, 0.282717, 0.333324, 0.333324
 		];
 
 		var STEREO_MODES = {
@@ -21,8 +32,12 @@
 		var frequency = opts.frequency;
 		var sampleRate = opts.sampleRate;
 		var envDepth = opts.envDepth;
+		var mode = opts.mode;
+		var volumeLevels = VOLUME_LEVELS_AY;
 
 		var cyclesPerSample = frequency / sampleRate;
+		/* envelope runs at double speed of an AY to cater for YM envelopes - in AY mode speed is halved again via volume table */
+		var cyclesPerSampleEnv = frequency / sampleRate * 2;
 
 		var toneGeneratorAPhase = 0;
 		var toneGeneratorAPeriod = 8;
@@ -67,6 +82,10 @@
 		} else {
 			panning = [0.5, 0.5, 0.5];
 		}
+		if (mode == "YM") {
+			volumeLevels = VOLUME_LEVELS_YM;
+		}
+
 		var panVolumeAdjust = [];
 		for (var i = 0; i < 3; i++) {
 			/* kebby says we should do this. And you don't argue with kebby.
@@ -112,17 +131,16 @@
 				case 12:
 					envelopePeriod = ((registers[12] << 8) | registers[11]) * 16;
 					if (envelopePeriod === 0) envelopePeriod = 16;
-					envelopePeriod *= (16 / (envDepth + 1));  //make envelope run twice as fast if depth=31
 					break;
 				case 13:
 					envelopeCounter = 0;
-					envelopeRampCounter = envDepth+1;
+					envelopeRampCounter = 32;
 					envelopeOnFirstRamp = true;
 					envelopeAlternatePhase = 0x00;
-					envelopeHoldMask = (val & 0x01) ? 0x0f : 0x00;
-					envelopeAlternateMask = (val & 0x02) ? 0x0f : 0x00;
-					envelopeAttackMask = (val & 0x04) ? 0x0f : 0x00;
-					envelopeContinueMask = (val & 0x08) ? 0x0f : 0x00;
+					envelopeHoldMask = (val & 0x01) ? 0x01f : 0x00;
+					envelopeAlternateMask = (val & 0x02) ? 0x01f : 0x00;
+					envelopeAttackMask = (val & 0x04) ? 0x01f : 0x00;
+					envelopeContinueMask = (val & 0x08) ? 0x01f : 0x00;
 					break;
 			}
 		};
@@ -165,20 +183,20 @@
 					noiseGeneratorSeed >>= 1;
 				}
 
-				envelopeCounter -= cyclesPerSample;
+				envelopeCounter -= cyclesPerSampleEnv;
 				while (envelopeCounter < 0) {
 					envelopeCounter += envelopePeriod;
 
 					envelopeRampCounter--;
 					if (envelopeRampCounter < 0) {
-						envelopeRampCounter = envDepth;
+						envelopeRampCounter = 31;
 						envelopeOnFirstRamp = false;
-						envelopeAlternatePhase ^= 0x0f;
+						envelopeAlternatePhase ^= 0x01f;
 					}
 
 					envelopeValue = (
 						/* start with the descending ramp counter */
-						envelopeRampCounter * (16 / (envDepth + 1)) //normalize to 16
+						envelopeRampCounter
 						/* XOR with the 'alternating' bit if on an even-numbered ramp */
 						^ (envelopeAlternatePhase && envelopeAlternateMask)
 					);
@@ -190,22 +208,21 @@
 					if (!envelopeOnFirstRamp) envelopeValue &= envelopeContinueMask;
 				}
 
-				var levelA = VOLUME_LEVELS[
-					((registers[8] & 0x10) ? envelopeValue : (registers[8] & 0x0f))
+				var levelA = volumeLevels[
+					((registers[8] & 0x10) ? envelopeValue : (registers[8] & 0x0f)<<1)
 					& (toneGeneratorAPhase | toneChanAMask)
 					& (noiseGeneratorPhase | noiseChanAMask)
 				];
-				var levelB = VOLUME_LEVELS[
-					((registers[9] & 0x10) ? envelopeValue : (registers[9] & 0x0f))
+				var levelB = volumeLevels[
+					((registers[9] & 0x10) ? envelopeValue : (registers[9] & 0x0f)<<1)
 					& (toneGeneratorBPhase | toneChanBMask)
 					& (noiseGeneratorPhase | noiseChanBMask)
 				];
-				var levelC = VOLUME_LEVELS[
-					((registers[10] & 0x10) ? envelopeValue : (registers[10] & 0x0f))
+				var levelC = volumeLevels[
+					((registers[10] & 0x10) ? envelopeValue : (registers[10] & 0x0f)<<1)
 					& (toneGeneratorCPhase | toneChanCMask)
 					& (noiseGeneratorPhase | noiseChanCMask) 
 				];
-
 				leftChannelData[bufferPos] = (
 					panVolumeAdjust[0][0] * levelA + panVolumeAdjust[1][0] * levelB + panVolumeAdjust[2][0] * levelC
 				);
@@ -218,7 +235,7 @@
 
 	Cowbell.Common.AYGenerator = function(url, audioCtx, decodeFileData) {
 		var AY_FREQUENCY = 1773400;
-		var AY_ENVDEPTH = 15;
+		var AY_MODE = 'AY';
 		var commandFrameDuration;
 		var framesPerCommandFrame;
 
@@ -304,7 +321,7 @@
 						'panning': decodedData['panning'],
 						'stereoMode': decodedData['stereoMode'],
 						'sampleRate': audioCtx.sampleRate,
-						'envDepth': decodedData['ayEnvDepth'] || AY_ENVDEPTH
+						'mode': decodedData['ayMode'] || AY_MODE
 					});
 
 					commandFrameDuration = 1 / (decodedData['commandFrequency'] || 50);

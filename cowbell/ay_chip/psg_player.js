@@ -50,7 +50,7 @@
 			onReady({
 				'ayRegisterLog': registerLog,
 				'ayFrequency': trackOpts.ayFrequency || playerOpts.ayFrequency,
-				'ayEnvDepth': trackOpts.ayEnvDepth || playerOpts.ayEnvDepth
+				'ayMode': trackOpts.ayMode || playerOpts.ayMode
 			});
 		});
 	}
