@@ -31,7 +31,6 @@
 
 		var frequency = opts.frequency;
 		var sampleRate = opts.sampleRate;
-		var envDepth = opts.envDepth;
 		var mode = opts.mode;
 		var volumeLevels = VOLUME_LEVELS_AY;
 
