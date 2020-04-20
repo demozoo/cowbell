@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 (xxxx-xx-xx)
+0.5 (2020-04-20)
 ~~~~~~~~~~~~~~~~
 
  * Added ASAP player by Piotr Fusik (Fox) to support .sap and other Atari 8-bit formats
