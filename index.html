@@ -18,11 +18,13 @@
 		<script src="cowbell/zx.min.js"></script>
 		<script src="cowbell/openmpt.min.js"></script>
 		<script src="cowbell/jssid.min.js"></script>
+		<script src="cowbell/asap.min.js"></script>
 
 		<script>
 			function go() {
 				var audioPlayer = new Cowbell.Player.Audio();
-				var psgPlayer = new Cowbell.Player.PSG();
+				var psgZXPlayer = new Cowbell.Player.PSG();
+				var psgSTPlayer = new Cowbell.Player.PSG({ayFrequency: 2000000, ayMode:"YM"});
 				var stcPlayer = new Cowbell.Player.ZXSTC({stereoMode: 'acb'});
 				var pt3Player = new Cowbell.Player.ZXPT3({stereoMode: 'acb'});
 				var sqtPlayer = new Cowbell.Player.ZXSQT({stereoMode: 'acb'});
@@ -31,6 +33,7 @@
 					'pathToLibOpenMPT': 'cowbell/libopenmpt.js'
 				});
 				var sidPlayer = new Cowbell.Player.JSSID();
+				var asapPlayer = new Cowbell.Player.ASAP();
 
 				var tracks = [
 					[
@@ -39,7 +42,11 @@
 					],
 					[
 						"Dancing Queen - Gasman (PSG)",
-						new psgPlayer.Track('music/dancing_queen.psg')
+						new psgZXPlayer.Track('music/dancing_queen.psg')
+					],
+					[
+						"Enchanted Lands - Jochen Hippel (PSY)",
+						new psgSTPlayer.Track('music/enchanted.psy')
 					],
 					[
 						"Worlds Apart - Gasman (STC)",
@@ -72,6 +79,10 @@
 					[
 						"Cybernoid - Jeroen Tel (SID)",
 						new sidPlayer.Track('music/cybernoid.sid')
+					],
+					[
+						"Windy Mind - X-Ray (SAP)",
+						new asapPlayer.Track('music/windym.sap')
 					]
 				]
 
@@ -105,7 +116,7 @@
 				<p>a universal web audio player for demoscene music</p>
 				<p class="view"><a href="http://github.com/demozoo/cowbell">View the Project on GitHub <small>demozoo/cowbell</small></a></p>
 				<ul>
-					<li><a href="downloads/cowbell-0.4.zip">Download <strong>0.4</strong></a></li>
+					<li><a href="downloads/cowbell-0.5.zip">Download <strong>0.5</strong></a></li>
 					<li><a href="https://github.com/demozoo/cowbell/blob/master/doc/usage.md">Usage <strong>Docs</strong></a></li>
 					<li><a href="http://github.com/demozoo/cowbell">Fork On <strong>GitHub</strong></a></li>
 				</ul>
@@ -122,7 +133,7 @@
 			<section>
 				<p>Cowbell is an HTML / JavaScript audio player focused on demoscene and tracker music. It aims to bring a wide variety of music file formats - from the obvious ones (MP3, OGG) through the classics (MOD, S3M, XM) to the more 'niche' (PT3, VTX...) - together under a common API and user interface.</p>
 
-				<p>Created by <a href="http://matt.west.co.tt/">Matt Westcott</a> (<a href="https://twitter.com/gasmanic">@gasmanic</a>). Brought to you by <a href="http://demozoo.org/">Demozoo</a></p>
+				<p>Created by <a href="http://gasman.zxdemo.org/">Matt Westcott</a> (<a href="https://twitter.com/gasmanic">@gasmanic</a>). Brought to you by <a href="http://demozoo.org/">Demozoo</a></p>
 			</section>
 			<footer>
 				<small><a href="http://orderedlist.com/minimal/">Minimal theme</a> by Steve Smith</small>
