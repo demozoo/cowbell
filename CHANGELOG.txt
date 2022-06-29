@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.1 (xxxx-xx-xx)
+~~~~~~~~~~~~~~~~~~
+
+ * Updated libopenmpt to version 0.6.4
+
 0.5 (2020-04-20)
 ~~~~~~~~~~~~~~~~
 

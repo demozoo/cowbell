@@ -1,4 +1,4 @@
-LIBOPENMPT_BUILD_VERSION = 12686
+LIBOPENMPT_TAG = libopenmpt-0.6.4
 
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
@@ -121,8 +121,8 @@ clean:
 libopenmpt:
 	mkdir -p build
 	cd build && \
-	svn checkout -r $(LIBOPENMPT_BUILD_VERSION) https://source.openmpt.org/svn/openmpt/trunk/OpenMPT/ openmpt-trunk && \
-	cd openmpt-trunk/ && \
+	svn checkout https://source.openmpt.org/svn/openmpt/tags/$(LIBOPENMPT_TAG) openmpt && \
+	cd openmpt/ && \
 	make clean && \
 	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 && \
 	cp bin/libopenmpt.js bin/libopenmpt.wasm ../../cowbell/openmpt/
