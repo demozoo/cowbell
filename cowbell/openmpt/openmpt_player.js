@@ -17,6 +17,16 @@
 			leftBufferPtr  = libopenmpt._malloc(4 * maxFramesPerChunk);
 			rightBufferPtr = libopenmpt._malloc(4 * maxFramesPerChunk);
 
+			function asciiToStack(str) {
+				var stackStr = stackAlloc(str.length + 1);
+				writeAsciiToMemory(str, stackStr);
+				return stackStr;
+			}
+			var stack = stackSave();
+			libopenmpt._openmpt_module_ctl_set(modulePtr, asciiToStack('render.resampler.emulate_amiga'), asciiToStack('1')); // enable Amiga resampler
+			libopenmpt._openmpt_module_ctl_set(modulePtr, asciiToStack('render.resampler.emulate_amiga_type'), asciiToStack('a1200')); // set emulated Amiga model to A1200
+			stackRestore(stack);
+
 			self.duration = libopenmpt._openmpt_module_get_duration_seconds(modulePtr);
 		}
 

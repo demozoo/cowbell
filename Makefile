@@ -124,5 +124,6 @@ libopenmpt:
 	svn checkout https://source.openmpt.org/svn/openmpt/tags/$(LIBOPENMPT_TAG) openmpt && \
 	cd openmpt/ && \
 	make clean && \
+	export LDFLAGS="-s \"EXPORTED_RUNTIME_METHODS=['stackAlloc','stackSave','stackRestore']\"" && \
 	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 && \
 	cp bin/libopenmpt.js bin/libopenmpt.wasm ../../cowbell/openmpt/
