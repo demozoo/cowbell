@@ -10,6 +10,9 @@ DIST_FILES=\
 	dist/cowbell/libopenmpt.js \
 	dist/cowbell/libopenmpt.wasm \
 	dist/cowbell/openmpt.min.js \
+	dist/cowbell/libpsgplay.js \
+	dist/cowbell/libpsgplay.wasm \
+	dist/cowbell/psgplay.min.js \
 	dist/doc/api.md \
 	dist/doc/usage.md \
 	dist/doc/LICENSE \
@@ -60,6 +63,20 @@ dist/cowbell/openmpt.min.js: cowbell/openmpt/openmpt_player.js
 	closure-compiler \
 		--js=cowbell/openmpt/openmpt_player.js \
 		--js_output_file=dist/cowbell/openmpt.min.js
+
+dist/cowbell/libpsgplay.js: cowbell/psgplay/libpsgplay.js
+	mkdir -p dist/cowbell/
+	cp cowbell/psgplay/libpsgplay.js dist/cowbell/libpsgplay.js
+
+dist/cowbell/libpsgplay.wasm: cowbell/psgplay/libpsgplay.wasm
+	mkdir -p dist/cowbell/
+	cp cowbell/psgplay/libpsgplay.wasm dist/cowbell/libpsgplay.wasm
+
+dist/cowbell/psgplay.min.js: cowbell/psgplay/psgplay_player.js
+	mkdir -p dist/cowbell/
+	closure-compiler \
+		--js=cowbell/psgplay/psgplay_player.js \
+		--js_output_file=dist/cowbell/psgplay.min.js
 
 dist/cowbell/jssid.min.js: cowbell/jssid.js
 	mkdir -p dist/cowbell/
@@ -127,3 +144,20 @@ libopenmpt:
 	export LDFLAGS="-s \"EXPORTED_RUNTIME_METHODS=['stackAlloc','stackSave','stackRestore']\"" && \
 	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 && \
 	cp bin/libopenmpt.js bin/libopenmpt.wasm ../../cowbell/openmpt/
+
+.PHONY: libpsgplay
+libpsgplay:
+	mkdir -p build
+	cd build && \
+	git -C "psgplay" pull || git clone https://github.com/tin-nl/psgplay_emscripten.git "psgplay" 
+	cd build/psgplay/ && \
+	make clean
+	#make native tools needed for emscripten build
+	cd build/psgplay/ && \
+	export CFLAGS="-g -O2 -Wall -fPIC -Iinclude -D_GNU_SOURCE" && \
+	make CC=gcc -f lib/m68k/Makefile emscripten
+	cd build/psgplay/ && \
+	export SOFLAGS="-s ASYNCIFY -s EXPORT_NAME=\"'libpsgplay'\" -s EXPORTED_FUNCTIONS='[\"_psgplay_init\",\"_psgplay_read_stereo\",\"_psgplay_free\",\"_ice_identify\",\"_ice_decrunched_size\",\"_ice_decrunch\",\"_sndh_tag_default_subtune\",\"_sndh_tag_subtune_time\",\"_malloc\",\"_free\"]' -s EXPORTED_RUNTIME_METHODS=ccall,cwrap" && \
+	export CROSS_COMPILE=  && \
+	emmake make emscripten && \
+	cp lib/psgplay/libpsgplay.js lib/psgplay/libpsgplay.wasm ../../cowbell/psgplay/

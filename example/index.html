@@ -7,6 +7,7 @@
 		<script src="../dist/cowbell/vtx.min.js"></script>
 		<script src="../dist/cowbell/zx.min.js"></script>
 		<script src="../dist/cowbell/openmpt.min.js"></script>
+		<script src="../dist/cowbell/psgplay.min.js"></script>
 		<script src="../dist/cowbell/jssid.min.js"></script>
 		<script src="../dist/cowbell/asap.min.js"></script>
 
@@ -24,6 +25,9 @@
 				});
 				var sidPlayer = new Cowbell.Player.JSSID();
 				var asapPlayer = new Cowbell.Player.ASAP();
+				var sndhPlayer = new Cowbell.Player.PSGPlay({
+					'pathToLibPSGPlay': '../dist/cowbell/libpsgplay.js'
+				});
 
 				var tracks = [
 					[
@@ -37,6 +41,10 @@
 					[
 						"Enchanted Lands - Jochen Hippel (PSY)",
 						new psgSTPlayer.Track('music/enchanted.psy')
+					],
+					[
+						"Enchanted Lands - Jochen Hippel (SNDH)",
+						new sndhPlayer.Track('music/Enchanted_Land.sndh')
 					],
 					[
 						"Worlds Apart - Gasman (STC)",

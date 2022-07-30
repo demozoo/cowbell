@@ -70,6 +70,8 @@ jsSID .sid player by [Mihaly Horvath (Hermit)](http://hermit.sidrip.com).
 
 .sap / Atari 8-bit format support from [ASAP (Another Slight Atari Player)](http://asap.sourceforge.net/) by Piotr Fusik (Fox) and others.
 
+.sndh player ([psgplay](https://github.com/frno7/psgplay)) by Fredrik Noring ([NoRing](https://demozoo.org/sceners/2515/)) and others.
+
 
 Contact
 -------
