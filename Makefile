@@ -149,11 +149,11 @@ libopenmpt:
 libpsgplay:
 	mkdir -p build
 	cd build && \
-	git -C "psgplay" pull || git clone -b emscripten https://github.com/frno7/psgplay.git "psgplay" 
+	git -C "psgplay" pull || git clone https://github.com/frno7/psgplay.git "psgplay" 
 	cd build/psgplay/ && \
 	make clean
 	cd build/psgplay/ && \
-	make HOST_CC=emcc HOST_CFLAGS=-O2 lib/psgplay/libpsgplay.js
+	make HOST_CC=emcc HOST_CFLAGS=-O2 web
 	cd build/psgplay/ && \
 	cp lib/psgplay/libpsgplay.js ../../cowbell/psgplay/libpsgplay.js && \
 	cp lib/psgplay/libpsgplay.wasm ../../cowbell/psgplay/libpsgplay.wasm
