@@ -140,7 +140,7 @@ A JavaScript port of the [libopenmpt](http://lib.openmpt.org/libopenmpt/) librar
 mod s3m xm it mptm stm nst m15 stk wow ult 669 mtm med far mdl ams dsm amf okt dmf ptm psm mt2 dbm digi imf j2b gdm umx plm mo3 xpk ppm mmcmp symmod dsym fmt stx mus
 
 
-This backend additionally depends on the `libopenmpt.js` library (and the accompanying resource file `libopenmpt.wasm`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, since it's over 2Mb in size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibOpenMPT` option.
+This backend additionally depends on the `libopenmpt.js` library (and the accompanying resource file `libopenmpt.wasm`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, due to its size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibOpenMPT` option.
 
 *Options:*
 
@@ -160,6 +160,19 @@ Player for the .PSG format, an uncompressed stream of AY / YM sound chip command
 * `commandFrequency`: Frequency (in Hz) at which command data will be pushed to the AY chip. Default: 50
 * `stereoMode`: A string indicating the stereo arrangement of the AY channels; for example, `'ACB'` denotes channel A on the left, B on the right, and C in the centre. Supported values are `'ABC'`, `'ACB'`, `'BAC'`, `'BCA'`, `'CAB'` and `'CBA'`; any other value denotes mono output. Default: mono
 * `panning`: A three-element array indicating the exact stereo positioning of the AY channels, where 0.0 = hard left and 1.0 = hard right. For example, `[0.0, 1.0, 0.5]` denotes ACB stereo with full separation. If both `panning` and `stereoMode` are specified, `panning` takes precedence.
+
+
+## Cowbell.Player.PSGPlay
+
+*Imports needed:* `cowbell.min.js`, `psgplay.min.js`
+
+A JavaScript build of the [psgplay](https://github.com/frno7/psgplay) library for playback of Atari ST .sndh files.
+
+This backend additionally depends on the `libpsgplay.js` library (and the accompanying resource file `libpsgplay.wasm`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, due to its size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibPSGPlay` option.
+
+*Options:*
+
+* `pathToLibPSGPlay` - the URL to libpsgplay.js
 
 
 ## Cowbell.Player.VTX

@@ -12,7 +12,7 @@ Features
 
 ### Support for lots of file formats
 
-MP3, OGG (and whatever else your browser supports natively), MOD, XM, S3M, IT (and all other formats implemented by libopenmpt), SID, SAP (and other Atari 8-bit formats implemented by ASAP), PSG, VTX, STC, SQT and PT3 formats
+MP3, OGG (and whatever else your browser supports natively), MOD, XM, S3M, IT (and all other formats implemented by libopenmpt), SID, SAP (and other Atari 8-bit formats implemented by ASAP), SNDH, PSG, VTX, STC, SQT and PT3 formats
 
 ### Highly accurate playback engines
 
