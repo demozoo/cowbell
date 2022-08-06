@@ -149,7 +149,7 @@ libopenmpt:
 libpsgplay:
 	mkdir -p build
 	cd build && \
-	git -C "psgplay" pull || git clone https://github.com/frno7/psgplay.git "psgplay" 
+	git -C "psgplay" pull || git clone --recurse-submodules https://github.com/frno7/psgplay.git "psgplay"
 	cd build/psgplay/ && \
 	make clean
 	cd build/psgplay/ && \
