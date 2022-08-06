@@ -17,6 +17,7 @@
 		<script src="cowbell/vtx.min.js"></script>
 		<script src="cowbell/zx.min.js"></script>
 		<script src="cowbell/openmpt.min.js"></script>
+		<script src="cowbell/psgplay.min.js"></script>
 		<script src="cowbell/jssid.min.js"></script>
 		<script src="cowbell/asap.min.js"></script>
 
@@ -34,6 +35,9 @@
 				});
 				var sidPlayer = new Cowbell.Player.JSSID();
 				var asapPlayer = new Cowbell.Player.ASAP();
+				var sndhPlayer = new Cowbell.Player.PSGPlay({
+					'pathToLibPSGPlay': 'cowbell/libpsgplay.js'
+				});
 
 				var tracks = [
 					[
@@ -47,6 +51,10 @@
 					[
 						"Enchanted Lands - Jochen Hippel (PSY)",
 						new psgSTPlayer.Track('music/enchanted.psy')
+					],
+					[
+						"There Aren't Any Sheep In Outer Mongolia - Mad Max (SNDH)",
+						new sndhPlayer.Track('music/There_Are_No_Sheep.sndh')
 					],
 					[
 						"Worlds Apart - Gasman (STC)",
@@ -116,7 +124,7 @@
 				<p>a universal web audio player for demoscene music</p>
 				<p class="view"><a href="http://github.com/demozoo/cowbell">View the Project on GitHub <small>demozoo/cowbell</small></a></p>
 				<ul>
-					<li><a href="downloads/cowbell-0.5.1.zip">Download <strong>0.5.1</strong></a></li>
+					<li><a href="downloads/cowbell-0.6.zip">Download <strong>0.6</strong></a></li>
 					<li><a href="https://github.com/demozoo/cowbell/blob/master/doc/usage.md">Usage <strong>Docs</strong></a></li>
 					<li><a href="http://github.com/demozoo/cowbell">Fork On <strong>GitHub</strong></a></li>
 				</ul>
