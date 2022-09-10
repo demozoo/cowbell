@@ -20,6 +20,9 @@ with audio data, and seeking to a specified time.
 					var AudioContext = window.AudioContext || window.webkitAudioContext;
 					audioCtx = new AudioContext();
 				}
+				if(audioCtx.state==="suspended"){
+					audioCtx.resume();
+				}
 
 				var BUFFER_SIZE = 4096;
 
