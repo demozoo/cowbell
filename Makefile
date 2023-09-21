@@ -6,7 +6,8 @@ DIST_FILES=\
 	dist/cowbell/vtx.min.js \
 	dist/cowbell/zx.min.js \
 	dist/cowbell/jssid.min.js \
-	dist/cowbell/asap.min.js \
+	dist/cowbell/asap.js \
+	dist/cowbell/asap_player.js \
 	dist/cowbell/libopenmpt.js \
 	dist/cowbell/libopenmpt.wasm \
 	dist/cowbell/openmpt.min.js \
@@ -84,11 +85,14 @@ dist/cowbell/jssid.min.js: cowbell/jssid.js
 		--js=cowbell/jssid.js \
 		--js_output_file=dist/cowbell/jssid.min.js
 
-dist/cowbell/asap.min.js: cowbell/asap/asap.js cowbell/asap/asap_player.js
+# closure-compiler would fail: https://github.com/google/closure-compiler/issues/4119
+dist/cowbell/asap.js: cowbell/asap/asap.js
 	mkdir -p dist/cowbell/
-	closure-compiler \
-		--js=cowbell/asap/asap.js --js=cowbell/asap/asap_player.js \
-		--js_output_file=dist/cowbell/asap.min.js
+	cp cowbell/asap/asap.js dist/cowbell/asap.js
+
+dist/cowbell/asap_player.js: cowbell/asap/asap_player.js
+	mkdir -p dist/cowbell/
+	cp cowbell/asap/asap_player.js dist/cowbell/asap_player.js
 
 dist/doc/api.md: doc/api.md
 	mkdir -p dist/doc/

@@ -1,9 +1,9 @@
+import { ASAP, ASAPSampleFormat } from "./asap.js";
+
 (function() {
 	function ASAPGenerator(url, audioCtx, playerOpts, trackOpts) {
 		this.asap = new ASAP();
-		if (audioCtx.sampleRate != ASAP.SAMPLE_RATE) {
-			console.log("Warning: sample rate mismatch (needed " + ASAP.SAMPLE_RATE + ", got " + audioCtx.sampleRate + ")");
-		}
+		this.asap.setSampleRate(audioCtx.sampleRate);
 		this.url = url;
 		this.buffer = new Uint8Array(65536);
 	}
@@ -17,7 +17,7 @@
 		});
 
 		request.addEventListener('load', function(e) {
-			data = request.response;
+			const data = request.response;
 			var dataArray = new Uint8Array(data);
 
 			var filename = self.url.split('/').pop();
