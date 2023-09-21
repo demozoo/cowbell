@@ -73,8 +73,10 @@ dist/cowbell/jssid.min.js: cowbell/jssid.js
 
 dist/cowbell/asap.min.js: cowbell/asap/asap.js cowbell/asap/asap_player.js
 	mkdir -p dist/cowbell/
+# --typeConstructors.number false prevents minify from eliminating a Number()
+# constructor that's necessary to cast from BigInt.
 	cat cowbell/asap/asap.js cowbell/asap/asap_player.js \
-		| minify --outFile dist/cowbell/asap.min.js
+		| minify --outFile dist/cowbell/asap.min.js --typeConstructors.number false
 
 dist/doc/api.md: doc/api.md
 	mkdir -p dist/doc/
