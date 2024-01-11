@@ -10,5 +10,4 @@ apt-get install -y pasmo make
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt-get install -y nodejs
 npm install -g coffeescript@1.12.7
-
-apt-get install -y closure-compiler
+npm install -g babel-minify@0.5.2
