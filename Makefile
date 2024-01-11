@@ -1,4 +1,4 @@
-LIBOPENMPT_TAG = libopenmpt-0.6.4
+LIBOPENMPT_TAG = libopenmpt-0.7.3
 
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
@@ -125,11 +125,12 @@ clean:
 .PHONY: libopenmpt
 libopenmpt:
 	mkdir -p build
+	rm -rf build/openmpt
 	cd build && \
 	svn checkout https://source.openmpt.org/svn/openmpt/tags/$(LIBOPENMPT_TAG) openmpt && \
 	cd openmpt/ && \
 	make clean && \
-	export LDFLAGS="-s \"EXPORTED_RUNTIME_METHODS=['stackAlloc','stackSave','stackRestore']\"" && \
+	export LDFLAGS="-s \"EXPORTED_RUNTIME_METHODS=['stackAlloc','stackSave','stackRestore', 'writeAsciiToMemory']\" -s \"EXPORTED_FUNCTIONS=['_malloc', '_free']\"" && \
 	make CONFIG=emscripten HACK_ARCHIVE_SUPPORT=1 USE_MINIMP3=1 && \
 	cp bin/libopenmpt.js bin/libopenmpt.wasm ../../cowbell/openmpt/
 

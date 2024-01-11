@@ -2,7 +2,7 @@
 
 # Provisioning script for installing Emscripten
 
-apt-get install -y build-essential cmake subversion pkg-config python-minimal make python3-distutils
+apt-get install -y build-essential cmake subversion pkg-config make python3-distutils
 
 su - vagrant -c "cd ~ && git clone https://github.com/emscripten-core/emsdk.git"
 su - vagrant -c "cd ~/emsdk && ./emsdk install latest && ./emsdk activate latest"
