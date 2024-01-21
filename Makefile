@@ -10,7 +10,6 @@ DIST_FILES=\
 	dist/cowbell/libopenmpt.js \
 	dist/cowbell/libopenmpt.wasm \
 	dist/cowbell/openmpt.min.js \
-	dist/cowbell/libpsgplay.js \
 	dist/cowbell/libpsgplay.wasm \
 	dist/cowbell/psgplay.min.js \
 	dist/doc/api.md \
