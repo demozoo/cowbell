@@ -1,6 +1,18 @@
 Changelog
 =========
 
+0.6.1 (2024-01-21)
+~~~~~~~~~~~~~~~~~~
+
+ * Updated ASAP to version 6.0.1
+ * Updated libopenmpt to 0.7.3
+ * Updated PSGplay to 0.6
+ * Fixed "audioContext not active" errors in Safari
+ * Fixed failure to start playback when playing OpenMPT and PSGplay files on the same page load
+ * Removed need to specify pathToLibPSGPlay option
+ * Replaced Closure Compiler with babel-minify
+
+
 0.6 (2022-08-06)
 ~~~~~~~~~~~~~~~~
 
