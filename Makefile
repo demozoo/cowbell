@@ -55,17 +55,14 @@ dist/cowbell/openmpt.min.js: cowbell/openmpt/openmpt_player.js
 	mkdir -p dist/cowbell/
 	minify cowbell/openmpt/openmpt_player.js --outFile dist/cowbell/openmpt.min.js
 
-dist/cowbell/libpsgplay.js: cowbell/psgplay/libpsgplay.js
-	mkdir -p dist/cowbell/
-	cp cowbell/psgplay/libpsgplay.js dist/cowbell/libpsgplay.js
-
 dist/cowbell/libpsgplay.wasm: cowbell/psgplay/libpsgplay.wasm
 	mkdir -p dist/cowbell/
 	cp cowbell/psgplay/libpsgplay.wasm dist/cowbell/libpsgplay.wasm
 
-dist/cowbell/psgplay.min.js: cowbell/psgplay/psgplay_player.js
+dist/cowbell/psgplay.min.js: cowbell/psgplay/libpsgplay.js cowbell/psgplay/psgplay_player.js
 	mkdir -p dist/cowbell/
-	minify cowbell/psgplay/psgplay_player.js --outFile dist/cowbell/psgplay.min.js
+	cat cowbell/psgplay/libpsgplay.js cowbell/psgplay/psgplay_player.js \
+		| minify --outFile dist/cowbell/psgplay.min.js
 
 dist/cowbell/jssid.min.js: cowbell/jssid.js
 	mkdir -p dist/cowbell/
@@ -142,7 +139,7 @@ libpsgplay:
 	cd build/psgplay/ && \
 	make clean
 	cd build/psgplay/ && \
-	make HOST_CC=emcc HOST_CFLAGS=-O2 V=1 -j"$(getconf _NPROCESSORS_ONLN)" web
+	make HOST_CC=emcc HOST_CFLAGS="-O2 -s MODULARIZE=1" V=1 -j"$(getconf _NPROCESSORS_ONLN)" web
 	cd build/psgplay/ && \
 	cp lib/psgplay/libpsgplay.js ../../cowbell/psgplay/libpsgplay.js && \
 	cp lib/psgplay/libpsgplay.wasm ../../cowbell/psgplay/libpsgplay.wasm

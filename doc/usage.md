@@ -168,11 +168,7 @@ Player for the .PSG format, an uncompressed stream of AY / YM sound chip command
 
 A JavaScript build of the [psgplay](https://github.com/frno7/psgplay) library for playback of Atari ST .sndh files.
 
-This backend additionally depends on the `libpsgplay.js` library (and the accompanying resource file `libpsgplay.wasm`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, due to its size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibPSGPlay` option.
-
-*Options:*
-
-* `pathToLibPSGPlay` - the URL to libpsgplay.js
+This backend additionally depends on the WebAssembly module `libpsgplay.wasm`, which must be located in the same folder as `psgplay.min.js`.
 
 
 ## Cowbell.Player.VTX
