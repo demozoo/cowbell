@@ -137,7 +137,7 @@ This provides support for the file types that your browser can play natively thr
 
 A JavaScript port of the [libopenmpt](http://lib.openmpt.org/libopenmpt/) library, which provides highly accurate playback of a wide variety of PC / Amiga tracker formats. The full list of supported file types is:
 
-mod s3m xm it mptm stm nst m15 stk wow ult 669 mtm med far mdl ams dsm amf okt dmf ptm psm mt2 dbm digi imf j2b gdm umx plm mo3 xpk ppm mmcmp symmod dsym fmt stx mus
+mod s3m xm it mptm stm nst m15 stk wow ult 669 mtm med far mdl ams dsm amf okt dmf ptm psm mt2 dbm digi imf j2b gdm umx plm mo3 xpk ppm mmcmp symmod dsym fmt stx mus puma ftm fc fc13 fc14 smod gmc cba rtm ims etx unic
 
 
 This backend additionally depends on the `libopenmpt.js` library (and the accompanying resource file `libopenmpt.wasm`), which cannot be imported with a `<script>` tag in the usual way. (This would be a bad idea anyhow, due to its size - we only want it to be downloaded when the user starts playback, rather than on every page load.) Instead, you must specify its path using the `pathToLibOpenMPT` option.

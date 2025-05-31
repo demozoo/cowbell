@@ -1,4 +1,4 @@
-LIBOPENMPT_TAG = libopenmpt-0.7.3
+LIBOPENMPT_TAG = libopenmpt-0.8.0
 
 DIST_FILES=\
 	dist/cowbell/cowbell.min.js \
