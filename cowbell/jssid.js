@@ -452,7 +452,19 @@ function JSSIDAdapter(url, audioCtx, playerOpts, trackOpts) {
   }
 
   this.sidPlayer = new jsSID(audioCtx.sampleRate, backgroundNoise);
-  this.url = url;
+
+  // look for an anchor in the URL to select a specific subsong
+  var hashIndex = url.indexOf('#');
+  if (hashIndex != -1) {
+    var subSong = parseInt(url.substring(hashIndex + 1));
+    if (!isNaN(subSong)) {
+      this.subSong = subSong;
+      this.url = url.substring(0, hashIndex);
+    }
+  } else {
+    this.subSong = 0;
+    this.url = url;
+  }
 }
 JSSIDAdapter.prototype.load = function(onReadyCallback) {
   var self = this;
@@ -461,7 +473,7 @@ JSSIDAdapter.prototype.load = function(onReadyCallback) {
     self.seekable = false;
     onReadyCallback();
   })
-  this.sidPlayer.loadinit(this.url, 0);
+  this.sidPlayer.loadinit(this.url, this.subSong);
 }
 JSSIDAdapter.prototype.generateAudio = function(outputBuffer) {
   var output = outputBuffer.getChannelData(0);
@@ -480,7 +492,7 @@ JSSIDAdapter.prototype.generateAudio = function(outputBuffer) {
   return framesToRender;
 }
 JSSIDAdapter.prototype.reset = function() {
-  this.sidPlayer.init(0);
+  this.sidPlayer.init(this.subSong);
   this.framesRendered = 0;
 }
 
