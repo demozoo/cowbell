@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.7 (2026-01-02)
+~~~~~~~~~~~~~~~~
+
+ * Allow specifying subtunes of .sid and .sap files via anchors in the URL (e.g. /mysong.sap#2)
+
+
 0.6.2 (2025-05-31)
 ~~~~~~~~~~~~~~~~~~
 
