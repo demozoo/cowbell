@@ -19,10 +19,26 @@
 			var dataArray = new Uint8Array(data);
 
 			var filename = self.url.split('/').pop();
+			let songNumber = null;
+
+			// extract anchor part if present
+			let match = filename.match(/^(.*?)(\#.*)$/);
+			if (match) {
+				filename = match[1];
+				songNumber = parseInt(match[2].substr(1));
+				if (isNaN(songNumber)) {
+					songNumber = null;
+				}
+			}
+
 			self.asap.load(filename, dataArray, dataArray.length);
 			var info = self.asap.getInfo();
 			self.channelCount = info.getChannels();
-			self.song = info.getDefaultSong();
+			if (songNumber !== null) {
+				self.song = songNumber;
+			} else {
+				self.song = info.getDefaultSong();
+			}
 			self.reportedDuration = info.getDuration(self.song);
 			if (self.reportedDuration == -1) {
 				self.duration = 60;
