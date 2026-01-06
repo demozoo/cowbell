@@ -35,7 +35,7 @@
 			var info = self.asap.getInfo();
 			self.channelCount = info.getChannels();
 			if (songNumber !== null) {
-				self.song = songNumber;
+				self.song = songNumber - 1; // user-facing song numbers are 1-indexed
 			} else {
 				self.song = info.getDefaultSong();
 			}

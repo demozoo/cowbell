@@ -458,7 +458,7 @@ function JSSIDAdapter(url, audioCtx, playerOpts, trackOpts) {
   if (hashIndex != -1) {
     var subSong = parseInt(url.substring(hashIndex + 1));
     if (!isNaN(subSong)) {
-      this.subSong = subSong;
+      this.subSong = subSong - 1;  // user-facing subsong numbers are 1-indexed
       this.url = url.substring(0, hashIndex);
     }
   } else {
